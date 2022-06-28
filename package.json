@@ -19,7 +19,9 @@
       "yarn format"
     ]
   },
-  "dependencies": {},
+  "dependencies": {
+    "dotenv": "^16.0.1"
+  },
   "devDependencies": {
     "@types/node": "^18.0.0",
     "@typescript-eslint/eslint-plugin": "^5.28.0",
