@@ -1,0 +1,16 @@
+name: Audit
+on: [push, pull_request]
+
+jobs:
+  run-audit:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Install Dependencies
+        run: yarn install --frozen-lockfile
+
+      - name: Audit
+        run: yarn audit
