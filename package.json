@@ -5,8 +5,10 @@
   "author": "Yusuke4869",
   "scripts": {
     "dev": "ts-node-dev src/index.ts",
+    "dev:commands": "ts-node-dev src/deployCommands.ts",
     "build": "tsc",
     "start": "node dist/index.js",
+    "deploy:commands": "node dist/deployCommands.js",
     "lint": "eslint --ignore-path .gitignore src/**/*.ts",
     "lint:fix": "eslint --ignore-path .gitignore src/**/*.ts --fix",
     "format": "prettier --write src/**/*.ts",
