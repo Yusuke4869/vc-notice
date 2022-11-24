@@ -1,4 +1,4 @@
-import { ActivityType, Client, GatewayIntentBits } from "discord.js";
+import { ActivityType, Client, Events, GatewayIntentBits } from "discord.js";
 import dotenv from "dotenv";
 
 import { helpMention, helpSlash, overview, ping, set } from "./commands";
@@ -8,12 +8,11 @@ import { DataBase } from "./util";
 dotenv.config();
 
 const intents = [
-  // ギルドイベント
   GatewayIntentBits.Guilds,
-  // メッセージイベント
   GatewayIntentBits.GuildMembers,
-  // ボイスイベント
+  GatewayIntentBits.GuildMessages,
   GatewayIntentBits.GuildVoiceStates,
+  GatewayIntentBits.MessageContent,
 ];
 
 export const db = new DataBase();
@@ -22,7 +21,7 @@ const client = new Client({ intents });
 const TOKEN = process.env.DISCORD_TOKEN;
 
 // 起動イベント
-client.once("ready", async () => {
+client.once(Events.ClientReady, async () => {
   const clientUser = client.user;
   if (!clientUser) throw new Error("Error: Cannot connect to Discord!");
 
@@ -36,12 +35,12 @@ client.once("ready", async () => {
 client.login(TOKEN).catch(console.error);
 
 // bot参加イベント
-client.on("guildCreate", async (guild) => {
+client.on(Events.GuildCreate, async (guild) => {
   await join(client, guild);
 });
 
 // メッセージイベント
-client.on("messageCreate", async (message) => {
+client.on(Events.MessageCreate, async (message) => {
   if (message.author.bot) return;
 
   // 自身がメンションされたとき
@@ -49,7 +48,7 @@ client.on("messageCreate", async (message) => {
 });
 
 // スラッシュコマンド
-client.on("interactionCreate", async (interaction) => {
+client.on(Events.InteractionCreate, async (interaction) => {
   if (!interaction.isCommand()) return;
 
   const { commandName } = interaction;
@@ -61,6 +60,6 @@ client.on("interactionCreate", async (interaction) => {
 });
 
 // 通話イベント
-client.on("voiceStateUpdate", async (oldVoiceState, newVoiceState) => {
+client.on(Events.VoiceStateUpdate, async (oldVoiceState, newVoiceState) => {
   await voiceActivity(client, oldVoiceState, newVoiceState);
 });
