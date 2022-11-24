@@ -21,6 +21,9 @@
       "yarn format"
     ]
   },
+  "engines": {
+    "npm": "Please use yarn instead"
+  },
   "dependencies": {
     "discord-api-types": "^0.37.0",
     "discord.js": "^14.0.0",
