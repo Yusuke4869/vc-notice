@@ -1,7 +1,7 @@
 import type { Snowflake } from "discord.js";
 import dotenv from "dotenv";
 import { MongoClient } from "mongodb";
-import { Collection, Db, ObjectId } from "mongodb";
+import type { Collection, Db, ObjectId } from "mongodb";
 
 import { languages } from "./lang";
 
@@ -10,6 +10,7 @@ dotenv.config();
 const MONGODB_URL = process.env.MONGODB_URL ?? "";
 const DB_NAME = process.env.DB_NAME ?? "bot";
 const DB_COLLECTION_NAME = process.env.DB_COLLECTION_NAME ?? "vc-notice";
+const DATA_NAME = process.env.DATA_NAME ?? "vc-notice";
 
 type Data = {
   _id?: ObjectId;
@@ -43,7 +44,6 @@ export class DataBase {
     this.db = this.client.db(DB_NAME);
     this.collection = this.db.collection(DB_COLLECTION_NAME);
     this.#isConnected = true;
-
     console.info("Connected Mongodb.");
   }
 
@@ -77,7 +77,7 @@ export class DataBase {
   async #getGuildsData() {
     try {
       await this.#wait();
-      const res = await this.collection?.findOne({ name: "vc-notice" });
+      const res = await this.collection?.findOne({ name: DATA_NAME });
       return res;
     } catch (e) {
       console.error(e);
@@ -104,12 +104,11 @@ export class DataBase {
     try {
       await this.#wait();
       const guildsData = await this.#getGuildsData();
-
       const data = guildsData?.data.filter((v) => v.guildID !== guildID);
       if (!data) return;
 
       const setData = [...data, newGuildData];
-      const res = await this.collection?.updateOne({ name: "vc-notice" }, { $set: { data: setData } });
+      const res = await this.collection?.updateOne({ name: DATA_NAME }, { $set: { data: setData } });
       return res;
     } catch (e) {
       console.error(e);
