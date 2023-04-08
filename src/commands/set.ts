@@ -57,7 +57,7 @@ const setChannel = async (client: Client, interaction: CommandInteraction) => {
   const guild = interaction.guild;
   const channel = interaction.channel;
   if (!guild || !channel || channel.type !== ChannelType.GuildText) {
-    await interaction.reply({ embeds: [errEmbed()], ephemeral: true });
+    await interaction.reply({ embeds: [errEmbed()], ephemeral: false });
     return;
   }
 
@@ -71,7 +71,7 @@ const setChannel = async (client: Client, interaction: CommandInteraction) => {
       lang: lang,
       webhookurl: url,
     });
-    await interaction.reply({ embeds: [embed(channel, lang)], ephemeral: true });
+    await interaction.reply({ embeds: [embed(channel, lang)], ephemeral: false });
   } catch (e) {
     console.error(e);
   }
@@ -81,7 +81,7 @@ const setLangage = async (client: Client, interaction: CommandInteraction) => {
   const guild = interaction.guild;
   const channel = interaction.channel;
   if (!guild || !channel || channel.type !== ChannelType.GuildText) {
-    await interaction.reply({ embeds: [errEmbed()], ephemeral: true });
+    await interaction.reply({ embeds: [errEmbed()], ephemeral: false });
     return;
   }
 
@@ -97,7 +97,7 @@ const setLangage = async (client: Client, interaction: CommandInteraction) => {
     });
 
     const webhookChannel = await getWebhookChannel(client, guild, url);
-    await interaction.reply({ embeds: [embed(webhookChannel, lang)], ephemeral: true });
+    await interaction.reply({ embeds: [embed(webhookChannel, lang)], ephemeral: false });
   } catch (e) {
     console.error(e);
   }
