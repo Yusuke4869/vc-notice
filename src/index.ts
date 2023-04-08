@@ -25,7 +25,7 @@ client.once(Events.ClientReady, async () => {
   const clientUser = client.user;
   if (!clientUser) throw new Error("Error: Cannot connect to Discord!");
 
-  console.info(`Logged in as ${clientUser.tag}`);
+  console.info(`Logged in as ${clientUser.tag} at ${new Date().toString()}`);
 
   setInterval(() => {
     clientUser.setActivity(`ping: ${client.ws.ping}ms`, { type: ActivityType.Playing });
