@@ -22,8 +22,10 @@
       "yarn format"
     ]
   },
+  "packageManager": "yarn@3.5.0",
   "volta": {
-    "node": "18.15.0"
+    "node": "18.15.0",
+    "yarn": "3.5.0"
   },
   "dependencies": {
     "discord-api-types": "^0.37.0",

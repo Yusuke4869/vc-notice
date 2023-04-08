@@ -3,3 +3,7 @@ dist/
 
 .husky/prepare-commit-msg
 .env
+
+# yarn
+.yarn/*
+!.yarn/releases
