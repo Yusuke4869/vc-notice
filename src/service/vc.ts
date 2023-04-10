@@ -29,7 +29,8 @@ const embed = (
     .setThumbnail(state.member?.displayAvatarURL() ?? "")
     .setColor(`#${noticeMessages.color[t]}`);
 
-  if ((t === "leaved" || t === "joinedAFK") && passedTime) res.setFooter({ text: `通話時間 ${calcTime(passedTime)}` });
+  if ((t === "leaved" || t === "joinedAFK") && passedTime)
+    res.setFooter({ text: `${noticeMessages.footer.callTime} ${calcTime(passedTime)}` });
   return res;
 };
 

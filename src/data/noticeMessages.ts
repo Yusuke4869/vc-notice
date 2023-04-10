@@ -18,6 +18,9 @@ export const createNoticeMessages = (channelName: string) => ({
       endedVideo: "Please video again!",
       joinedAFK: "Your voice hasn't been heard",
     },
+    footer: {
+      callTime: "Call Time",
+    },
     color: {
       joined: "008000",
       leaved: "FF0000",
@@ -46,6 +49,9 @@ export const createNoticeMessages = (channelName: string) => ({
       startedVideo: "ビデオを見よう！",
       endedVideo: "またやってね！",
       joinedAFK: "あなたの声は聞こえないよ",
+    },
+    footer: {
+      callTime: "通話時間",
     },
     color: {
       joined: "008000",
