@@ -2,6 +2,7 @@ import type { Snowflake } from "discord.js";
 import dotenv from "dotenv";
 import { MongoClient } from "mongodb";
 import type { Collection, Db, ObjectId } from "mongodb";
+import { exit } from "process";
 
 import { languages } from "../util";
 
@@ -40,10 +41,18 @@ export class DataBase {
    * 接続
    */
   async #init() {
-    await this.client.connect().then().catch(console.error);
+    await this.client
+      .connect()
+      .then(() => {
+        this.#isConnected = true;
+      })
+      .catch((e) => {
+        console.error(e);
+        console.error("Could Not Connected Mongodb");
+        exit(1);
+      });
     this.db = this.client.db(DB_NAME);
     this.collection = this.db.collection(DB_COLLECTION_NAME);
-    this.#isConnected = true;
     console.info("Connected Mongodb.");
   }
 
