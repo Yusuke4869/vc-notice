@@ -30,7 +30,7 @@ const embed = (
 
 export const voiceActivity = async (client: Client, oldVoiceState: VoiceState, newVoiceState: VoiceState) => {
   const guildData = await db.getGuildData(newVoiceState.guild.id);
-  const webhookurl = guildData?.webhookurl;
+  const webhookurl = guildData?.webhookUrl;
 
   // 参加
   if (!oldVoiceState.channel && newVoiceState.channel)
