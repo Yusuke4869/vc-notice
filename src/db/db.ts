@@ -4,7 +4,7 @@ import { MongoClient } from "mongodb";
 import type { Collection, Db, ObjectId } from "mongodb";
 import { exit } from "process";
 
-import { GuildData } from "../types";
+import { Guild } from "../types";
 
 dotenv.config();
 
@@ -12,7 +12,7 @@ const MONGODB_URL = process.env.MONGODB_URL ?? "";
 const DB_NAME = process.env.DB_NAME ?? "bots";
 const DB_COLLECTION_NAME = process.env.DB_COLLECTION_NAME ?? "vc-notice";
 
-type Data = GuildData & {
+type Data = Guild & {
   _id?: ObjectId;
 };
 
@@ -77,7 +77,7 @@ export class DataBase {
    */
   async getGuildData(guildId: string) {
     await this.#wait();
-    const res = await this.collection?.findOne({ guildId: guildId });
+    const res = await this.collection?.findOne({ id: guildId });
     return res;
   }
 
@@ -85,7 +85,7 @@ export class DataBase {
    * ギルドのデータを新たに保存します
    * @param guildData ギルドのデータ
    */
-  async #createGuildData(guildData: GuildData) {
+  async #createGuildData(guildData: Guild) {
     try {
       const res = await this.collection?.insertOne(guildData);
       return res;
@@ -99,7 +99,7 @@ export class DataBase {
    * @param guildId 更新するギルドのID
    * @param newGuildData ギルドの新しいデータ
    */
-  async updateGuildData(guildId: Snowflake, newGuildData: GuildData) {
+  async updateGuildData(guildId: Snowflake, newGuildData: Guild) {
     try {
       const guildData = await this.getGuildData(guildId);
       if (!guildData) {
@@ -107,7 +107,7 @@ export class DataBase {
         return createRes;
       }
 
-      const res = await this.collection?.updateOne({ guildId: guildId }, { $set: newGuildData });
+      const res = await this.collection?.updateOne({ id: guildId }, { $set: newGuildData });
       return res;
     } catch (e) {
       console.error(e);

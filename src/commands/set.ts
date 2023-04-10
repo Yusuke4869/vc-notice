@@ -67,10 +67,11 @@ const setChannel = async (client: Client, interaction: CommandInteraction) => {
     const url = await updateWebhook(client, channel, guildData?.webhookUrl ?? null);
 
     await db.updateGuildData(guild.id, {
-      guildName: guild.name,
-      guildId: guild.id,
+      name: guild.name,
+      id: guild.id,
       lang: lang,
       webhookUrl: url,
+      members: guildData?.members ?? [],
     });
     await interaction.reply({ embeds: [embed(channel, lang)], ephemeral: false });
   } catch (e) {
@@ -92,10 +93,11 @@ const setLangage = async (client: Client, interaction: CommandInteraction) => {
     const url = guildData?.webhookUrl ?? (await updateWebhook(client, channel, null));
 
     await db.updateGuildData(guild.id, {
-      guildName: guild.name,
-      guildId: guild.id,
+      name: guild.name,
+      id: guild.id,
       lang: lang,
       webhookUrl: url,
+      members: guildData?.members ?? [],
     });
 
     const webhookChannel = await getWebhookChannel(client, guild, url);
