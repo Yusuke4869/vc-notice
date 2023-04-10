@@ -2,8 +2,8 @@ import { ActivityType, Client, Events, GatewayIntentBits } from "discord.js";
 import dotenv from "dotenv";
 
 import { helpMention, helpSlash, overview, ping, set } from "./commands";
+import { DataBase } from "./db";
 import { join, voiceActivity } from "./service";
-import { DataBase } from "./util";
 
 dotenv.config();
 

@@ -3,7 +3,7 @@ import dotenv from "dotenv";
 import { MongoClient } from "mongodb";
 import type { Collection, Db, ObjectId } from "mongodb";
 
-import { languages } from "./lang";
+import { languages } from "../util";
 
 dotenv.config();
 
