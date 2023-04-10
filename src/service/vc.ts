@@ -3,6 +3,8 @@ import type { Client, VoiceState } from "discord.js";
 
 import { createNoticeMessages } from "../data";
 import { db } from "../index";
+import { calcTime } from "../util";
+import { addJoinedAt, addTotalTime } from "./member";
 import { send } from "./webhook";
 
 const activityType = createNoticeMessages("");
@@ -12,6 +14,7 @@ const embed = (
   channelName: string,
   t: keyof typeof activityType.en.title,
   lang: keyof typeof activityType,
+  passedTime?: number,
 ) => {
   const noticeMessages = createNoticeMessages(channelName)[lang];
 
@@ -25,19 +28,40 @@ const embed = (
     ])
     .setThumbnail(state.member?.displayAvatarURL() ?? "")
     .setColor(`#${noticeMessages.color[t]}`);
+
+  if ((t === "leaved" || t === "joinedAFK") && passedTime) res.setFooter({ text: `通話時間 ${calcTime(passedTime)}` });
   return res;
 };
 
 export const voiceActivity = async (client: Client, oldVoiceState: VoiceState, newVoiceState: VoiceState) => {
   const guildData = await db.getGuildData(newVoiceState.guild.id);
-  const webhookurl = guildData?.webhookUrl;
+  if (!guildData) {
+    console.log(`Not found id ${newVoiceState.guild.id} guild data`);
+    return;
+  }
+
+  const webhookurl = guildData.webhookUrl;
+  const unixtime = Math.floor(new Date().getTime() / 1000);
+  let isLeaved = false;
+
+  const memberData = guildData?.members.find((v) => v.id === newVoiceState.member?.id);
+  const joinedAt = memberData?.joinedAt;
+  const passedTime = joinedAt ? unixtime - joinedAt : 0;
 
   // 参加
-  if (!oldVoiceState.channel && newVoiceState.channel)
+  if (!oldVoiceState.channel && newVoiceState.channel) {
     await send(client, webhookurl, embed(newVoiceState, newVoiceState.channel.name, "joined", guildData?.lang ?? "en"));
+    newVoiceState.member && (await addJoinedAt(newVoiceState.member, unixtime, guildData));
+  }
   // 退出
-  else if (oldVoiceState.channel && !newVoiceState.channel)
-    await send(client, webhookurl, embed(newVoiceState, oldVoiceState.channel.name, "leaved", guildData?.lang ?? "en"));
+  else if (oldVoiceState.channel && !newVoiceState.channel) {
+    await send(
+      client,
+      webhookurl,
+      embed(newVoiceState, oldVoiceState.channel.name, "leaved", guildData?.lang ?? "en", passedTime),
+    );
+    isLeaved = true;
+  }
   // 前後のチャンネルが同じ
   else if (oldVoiceState.channelId === newVoiceState.channelId) {
     // 配信ステータスが異なるとき
@@ -78,12 +102,14 @@ export const voiceActivity = async (client: Client, oldVoiceState: VoiceState, n
   // 前後のチャンネルが異なるとき
   else if (oldVoiceState.channelId !== newVoiceState.channelId && newVoiceState.channel) {
     // AFKチャンネル参加
-    if (newVoiceState.channelId === newVoiceState.guild.afkChannelId)
+    if (newVoiceState.channelId === newVoiceState.guild.afkChannelId) {
       await send(
         client,
         webhookurl,
-        embed(newVoiceState, newVoiceState.channel.name, "joinedAFK", guildData?.lang ?? "en"),
+        embed(newVoiceState, newVoiceState.channel.name, "joinedAFK", guildData?.lang ?? "en", passedTime),
       );
+      isLeaved = true;
+    }
     // チャンネル移動
     else
       await send(
@@ -92,4 +118,6 @@ export const voiceActivity = async (client: Client, oldVoiceState: VoiceState, n
         embed(newVoiceState, newVoiceState.channel.name, "joined", guildData?.lang ?? "en"),
       );
   }
+
+  if (isLeaved && newVoiceState.member) await addTotalTime(newVoiceState.member, passedTime, guildData);
 };
