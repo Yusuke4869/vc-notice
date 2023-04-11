@@ -8,7 +8,7 @@ import { Guild } from "../types";
 
 dotenv.config();
 
-const MONGODB_URL = process.env.MONGODB_URL ?? "";
+const MONGODB_URI = process.env.MONGODB_URI ?? "";
 const DB_NAME = process.env.DB_NAME ?? "bots";
 const DB_COLLECTION_NAME = process.env.DB_COLLECTION_NAME ?? "vc-notice";
 
@@ -23,7 +23,7 @@ export class DataBase {
   #isConnected: boolean;
 
   constructor() {
-    this.client = new MongoClient(MONGODB_URL);
+    this.client = new MongoClient(MONGODB_URI);
     this.#isConnected = false;
     this.#init();
   }
