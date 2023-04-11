@@ -64,12 +64,14 @@ const setChannel = async (client: Client, interaction: CommandInteraction) => {
   try {
     const guildData = await db.getGuildData(guild.id);
     const lang = guildData?.lang ?? "en";
-    const url = await updateWebhook(client, channel, guildData?.webhookurl ?? null);
+    const url = await updateWebhook(client, channel, guildData?.webhookUrl ?? null);
 
     await db.updateGuildData(guild.id, {
-      guildID: guild.id,
+      name: guild.name,
+      id: guild.id,
       lang: lang,
-      webhookurl: url,
+      webhookUrl: url,
+      members: guildData?.members ?? [],
     });
     await interaction.reply({ embeds: [embed(channel, lang)], ephemeral: false });
   } catch (e) {
@@ -88,12 +90,14 @@ const setLangage = async (client: Client, interaction: CommandInteraction) => {
   try {
     const guildData = await db.getGuildData(guild.id);
     const lang = (interaction.options.data[0].options?.at(0)?.value as keyof typeof msg) ?? "en";
-    const url = guildData?.webhookurl ?? (await updateWebhook(client, channel, null));
+    const url = guildData?.webhookUrl ?? (await updateWebhook(client, channel, null));
 
     await db.updateGuildData(guild.id, {
-      guildID: guild.id,
+      name: guild.name,
+      id: guild.id,
       lang: lang,
-      webhookurl: url,
+      webhookUrl: url,
+      members: guildData?.members ?? [],
     });
 
     const webhookChannel = await getWebhookChannel(client, guild, url);

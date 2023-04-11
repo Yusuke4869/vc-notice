@@ -4,25 +4,16 @@ import { MongoClient } from "mongodb";
 import type { Collection, Db, ObjectId } from "mongodb";
 import { exit } from "process";
 
-import { languages } from "../util";
+import { Guild } from "../types";
 
 dotenv.config();
 
 const MONGODB_URL = process.env.MONGODB_URL ?? "";
-const DB_NAME = process.env.DB_NAME ?? "bot";
+const DB_NAME = process.env.DB_NAME ?? "bots";
 const DB_COLLECTION_NAME = process.env.DB_COLLECTION_NAME ?? "vc-notice";
-const DATA_NAME = process.env.DATA_NAME ?? "vc-notice";
 
-type Data = {
+type Data = Guild & {
   _id?: ObjectId;
-  name: string;
-  data: GuildData[];
-};
-
-type GuildData = {
-  guildID: Snowflake;
-  lang: keyof typeof languages;
-  webhookurl: string | undefined;
 };
 
 export class DataBase {
@@ -80,13 +71,23 @@ export class DataBase {
   }
 
   /**
-   * すべてのGuildのデータを返します
-   * @returns すべてのGuildのデータ
+   * 特定のギルドのデータを返します
+   * @param guildId 返してほしいギルドのID
+   * @returns ギルドのデータ
    */
-  async #getGuildsData() {
+  async getGuildData(guildId: string) {
+    await this.#wait();
+    const res = await this.collection?.findOne({ id: guildId });
+    return res;
+  }
+
+  /**
+   * ギルドのデータを新たに保存します
+   * @param guildData ギルドのデータ
+   */
+  async #createGuildData(guildData: Guild) {
     try {
-      await this.#wait();
-      const res = await this.collection?.findOne({ name: DATA_NAME });
+      const res = await this.collection?.insertOne(guildData);
       return res;
     } catch (e) {
       console.error(e);
@@ -94,30 +95,19 @@ export class DataBase {
   }
 
   /**
-   * 特定のギルドのデータを返します
-   * @param guildId 返してほしいギルドのID
-   * @returns ギルドのデータ
-   */
-  async getGuildData(guildId: string) {
-    const guildsData = await this.#getGuildsData();
-    const res = guildsData?.data.find((value) => value.guildID === guildId);
-    return res;
-  }
-
-  /**
    * ギルドのデータを更新します
-   * @param guildID 更新するギルドのID
-   * @param newGuildData 該当ギルドの新しいデータ
+   * @param guildId 更新するギルドのID
+   * @param newGuildData ギルドの新しいデータ
    */
-  async updateGuildData(guildID: Snowflake, newGuildData: GuildData) {
+  async updateGuildData(guildId: Snowflake, newGuildData: Guild) {
     try {
-      await this.#wait();
-      const guildsData = await this.#getGuildsData();
-      const data = guildsData?.data.filter((v) => v.guildID !== guildID);
-      if (!data) return;
+      const guildData = await this.getGuildData(guildId);
+      if (!guildData) {
+        const createRes = this.#createGuildData(newGuildData);
+        return createRes;
+      }
 
-      const setData = [...data, newGuildData];
-      const res = await this.collection?.updateOne({ name: DATA_NAME }, { $set: { data: setData } });
+      const res = await this.collection?.updateOne({ id: guildId }, { $set: newGuildData });
       return res;
     } catch (e) {
       console.error(e);
