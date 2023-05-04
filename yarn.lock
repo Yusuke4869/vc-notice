@@ -2331,8 +2331,8 @@ __metadata:
   linkType: hard
 
 "mongodb@npm:^5.0.0":
-  version: 5.3.0
-  resolution: "mongodb@npm:5.3.0"
+  version: 5.4.0
+  resolution: "mongodb@npm:5.4.0"
   dependencies:
     bson: ^5.2.0
     mongodb-connection-string-url: ^2.6.0
@@ -2352,7 +2352,7 @@ __metadata:
       optional: true
     snappy:
       optional: true
-  checksum: da86069555f3f700a0ef338a4676de2254ef64f7700427c0e23ccd5bd9ca9cd5f08651f2eb5083edfdc1e7eed1b40c60041b16e6d4851f353a26d9469d274299
+  checksum: f0e0f5559186d041f93ddb94d2e7276240b03936da2d043cc76c3d541e1242ddb62b1f105d5033867819592be2dad27e178d875d1ed0c567f5785c275d996869
   languageName: node
   linkType: hard
 
