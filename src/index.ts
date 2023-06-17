@@ -3,7 +3,7 @@ import dotenv from "dotenv";
 
 import { helpMention, helpSlash, overview, ping, set } from "./commands";
 import { DataBase } from "./db";
-import { join, voiceActivity } from "./service";
+import { join, voiceActivity } from "./services";
 
 dotenv.config();
 

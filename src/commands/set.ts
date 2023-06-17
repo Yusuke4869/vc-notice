@@ -3,8 +3,8 @@ import type { APIEmbedField, Client, CommandInteraction, TextChannel } from "dis
 
 import { createNoticeMessages } from "../data";
 import { db } from "../index";
-import { getWebhookChannel, updateWebhook } from "../service";
-import { languages } from "../util";
+import { getWebhookChannel, updateWebhook } from "../services";
+import { languages } from "../utils";
 import { setHelp } from "./help";
 
 const msg = createNoticeMessages("");

@@ -3,7 +3,7 @@ import type { Client, VoiceState } from "discord.js";
 
 import { createNoticeMessages } from "../data";
 import { db } from "../index";
-import { calcTime } from "../util";
+import { calcTime } from "../utils";
 import { addJoinedAt, addTotalTime } from "./member";
 import { send } from "./webhook";
 

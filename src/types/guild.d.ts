@@ -1,6 +1,6 @@
 import type { Snowflake } from "discord.js";
 
-import { languages } from "../util";
+import { languages } from "../utils";
 import type { Member } from "./member";
 
 export interface Guild {
