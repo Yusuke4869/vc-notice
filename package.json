@@ -30,7 +30,7 @@
     "discord-api-types": "^0.37.0",
     "discord.js": "^14.0.0",
     "dotenv": "^16.0.1",
-    "mongodb": "^5.0.0"
+    "mongodb": "^6.0.0"
   },
   "devDependencies": {
     "@trivago/prettier-plugin-sort-imports": "^4.0.0",
