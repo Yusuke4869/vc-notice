@@ -33,6 +33,11 @@ client.on(Events.GuildCreate, async (guild) => {
   await join(client, guild);
 });
 
+// bot退出イベント
+client.on(Events.GuildDelete, async (guild) => {
+  await db.deleteGuildData(guild.id);
+});
+
 // メッセージイベント
 client.on(Events.MessageCreate, async (message) => {
   if (message.author.bot) return;

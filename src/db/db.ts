@@ -113,4 +113,18 @@ export class DataBase {
       console.error(e);
     }
   }
+
+  /**
+   * ギルドのデータを削除します
+   * @param guildId 削除するギルドのID
+   * @returns DeleteResult | undefined
+   */
+  async deleteGuildData(guildId: Snowflake) {
+    try {
+      const res = await this.collection?.deleteOne({ id: guildId });
+      return res;
+    } catch (e) {
+      console.error(e);
+    }
+  }
 }
