@@ -1224,9 +1224,9 @@ __metadata:
   linkType: hard
 
 "discord-api-types@npm:^0.37.0":
-  version: 0.37.59
-  resolution: "discord-api-types@npm:0.37.59"
-  checksum: fff8b2d04b3dc571aae8dbb48e81999462c04f155aee8b0ebf11b60b184ca0026875fd31f5abaf43f72bba9d84b421e4d77edb79207515226ed08d4223e5d05d
+  version: 0.37.60
+  resolution: "discord-api-types@npm:0.37.60"
+  checksum: d5361e37f1fa3b06964db476a4a150fbfdcfdfe0f2b46c7eb3d225caf7128a83c2c726d35aaddce93eba07ac1d819e329bd7fcb0f8988aa51b56a307119312c4
   languageName: node
   linkType: hard
 
