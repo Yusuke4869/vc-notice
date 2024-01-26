@@ -12,10 +12,10 @@ dotenv.config();
  * NOTE: https://discordjs.guide/creating-your-bot/slash-commands.html#individual-command-files
  */
 const commands = [
-  new SlashCommandBuilder().setName("help").setDescription("Display help").setDescriptionLocalizations({
+  new SlashCommandBuilder().setName("help").setDescription("Show help").setDescriptionLocalizations({
     ja: "Helpを表示します",
   }),
-  new SlashCommandBuilder().setName("overview").setDescription("Display overview of me").setDescriptionLocalizations({
+  new SlashCommandBuilder().setName("overview").setDescription("Show overview of me").setDescriptionLocalizations({
     ja: "このBotの概要を表示します",
   }),
   new SlashCommandBuilder()
@@ -25,14 +25,17 @@ const commands = [
       ja: "設定",
     })
     .addSubcommand((subcommand) =>
-      subcommand.setName("help").setDescription("Display help of settings").setDescriptionLocalizations({
+      subcommand.setName("help").setDescription("Show help of settings").setDescriptionLocalizations({
         ja: "設定のHelpを表示します",
       }),
     )
     .addSubcommand((subcommand) =>
-      subcommand.setName("channel").setDescription("Set notification channel").setDescriptionLocalizations({
-        ja: "通知するチャンネルを設定します",
-      }),
+      subcommand
+        .setName("channel")
+        .setDescription("Set this channel to send notifications")
+        .setDescriptionLocalizations({
+          ja: "このチャンネルに通知を送るように設定します",
+        }),
     )
     .addSubcommand((subcommand) =>
       subcommand
