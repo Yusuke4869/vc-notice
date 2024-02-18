@@ -1,6 +1,6 @@
 import type { GuildMember } from "discord.js";
 
-import { db } from "../index";
+import { db } from "../main";
 import type { Guild, Member } from "../types";
 
 export const addJoinedAt = async (member: GuildMember, joinedAt: number, guildData: Guild) => {

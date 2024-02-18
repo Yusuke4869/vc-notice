@@ -2,7 +2,7 @@ import { EmbedBuilder } from "discord.js";
 import type { Client, VoiceState } from "discord.js";
 
 import { createNoticeMessages } from "../data";
-import { db } from "../index";
+import { db } from "../main";
 import { calcTime } from "../utils";
 import { addJoinedAt, addTotalTime } from "./member";
 import { send } from "./webhook";

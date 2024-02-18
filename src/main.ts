@@ -1,9 +1,8 @@
 import { ActivityType, Client, Events, GatewayIntentBits } from "discord.js";
 import dotenv from "dotenv";
 
-import { helpMention, helpSlash, overview, ping, set } from "./commands";
 import { DataBase } from "./db";
-import { join, voiceActivity } from "./services";
+import { join, mention, slashCommand, voiceActivity } from "./services";
 
 dotenv.config();
 
@@ -43,19 +42,14 @@ client.on(Events.MessageCreate, async (message) => {
   if (message.author.bot) return;
 
   // 自身がメンションされたとき
-  if (message.mentions.users.has(client.user?.id ?? "")) await helpMention(client, message);
+  if (message.mentions.users.has(client.user?.id ?? "")) await mention(message);
 });
 
 // スラッシュコマンド
 client.on(Events.InteractionCreate, async (interaction) => {
   if (!interaction.isCommand()) return;
 
-  const { commandName } = interaction;
-
-  if (commandName === "help") await helpSlash(client, interaction);
-  else if (commandName === "overview") await overview(client, interaction);
-  else if (commandName === "set") await set(client, interaction);
-  else if (commandName === "ping") await ping(client, interaction);
+  await slashCommand(client, interaction);
 });
 
 // 通話イベント
