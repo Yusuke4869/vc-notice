@@ -1,3 +1,4 @@
+export * from "./about";
 export * from "./help";
-export * from "./set";
 export * from "./ping";
+export * from "./set";

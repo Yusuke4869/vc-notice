@@ -1,22 +1,14 @@
-import { EmbedBuilder } from "discord.js";
 import type { Client, CommandInteraction } from "discord.js";
 
-const embed = (client: Client) => {
-  const res = new EmbedBuilder()
-    .setTitle("Pong!")
-    .setColor("#FAA61A")
-    .addFields([
-      {
-        name: "Latency",
-        value: `${client.ws.ping}ms`,
-      },
-    ]);
-  return res;
-};
+import { pingEmbed } from "../embed";
+import { buildEmbed } from "../utils";
 
 export const ping = async (client: Client, interaction: CommandInteraction) => {
   try {
-    await interaction.reply({ embeds: [embed(client)], ephemeral: true });
+    await interaction.reply({
+      embeds: [buildEmbed(pingEmbed(client.ws.ping), interaction.locale)],
+      ephemeral: true,
+    });
   } catch (e) {
     console.error(e);
   }
