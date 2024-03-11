@@ -440,12 +440,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@mongodb-js/saslprep@npm:^1.1.0":
-  version: 1.1.0
-  resolution: "@mongodb-js/saslprep@npm:1.1.0"
+"@mongodb-js/saslprep@npm:^1.1.5":
+  version: 1.1.5
+  resolution: "@mongodb-js/saslprep@npm:1.1.5"
   dependencies:
     sparse-bitfield: "npm:^3.0.3"
-  checksum: 10c0/2d923da9ec1e09cf68cff448fcaea3791bbb3f51610ed093893519003376c9f9c1bf8c32ad76ba4f894aa8abd591eafeb5325097394f2699f6294dec9f58d897
+  checksum: 10c0/482ae24d1d8e27dc5f2cdbc2dd9f75c32329c0e4804d93725c894b327322731051832abfa73e36399d7fcef50f2c6364077889d0c8b5ed8353e3364ea0b2a323
   languageName: node
   linkType: hard
 
@@ -2394,10 +2394,10 @@ __metadata:
   linkType: hard
 
 "mongodb@npm:^6.0.0":
-  version: 6.4.0
-  resolution: "mongodb@npm:6.4.0"
+  version: 6.5.0
+  resolution: "mongodb@npm:6.5.0"
   dependencies:
-    "@mongodb-js/saslprep": "npm:^1.1.0"
+    "@mongodb-js/saslprep": "npm:^1.1.5"
     bson: "npm:^6.4.0"
     mongodb-connection-string-url: "npm:^3.0.0"
   peerDependencies:
@@ -2423,7 +2423,7 @@ __metadata:
       optional: true
     socks:
       optional: true
-  checksum: 10c0/420195252dea0c1911e3653cde99179c3035a60d084f640cb22f1eb25ae6a315693e1d8944c5c856d4c29f6a6885d2a3dad9d941cb357c984781a0b76309ff20
+  checksum: 10c0/d51f8673b76f073ef5d0101d96b1adc3ebacd63890771cb72ae245081415887a2e0b5a9451b18e370f930d63173f2af68fac98371487995ae921140756fe510b
   languageName: node
   linkType: hard
 
