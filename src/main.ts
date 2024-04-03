@@ -1,14 +1,12 @@
 import { ActivityType, Client, Events, GatewayIntentBits } from "discord.js";
 import dotenv from "dotenv";
 
-import { DataBase } from "./db";
+import { deleteGuildData } from "./repositories/guild";
 import { join, mention, slashCommand, voiceActivity } from "./services";
 
 dotenv.config();
 
 const intents = [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages, GatewayIntentBits.GuildVoiceStates];
-
-export const db = new DataBase();
 
 const client = new Client({ intents });
 const TOKEN = process.env.DISCORD_TOKEN;
@@ -29,12 +27,12 @@ client.login(TOKEN).catch(console.error);
 
 // bot参加イベント
 client.on(Events.GuildCreate, async (guild) => {
-  await join(client, guild);
+  await join(guild);
 });
 
 // bot退出イベント
 client.on(Events.GuildDelete, async (guild) => {
-  await db.deleteGuildData(guild.id);
+  await deleteGuildData(guild.id);
 });
 
 // メッセージイベント
