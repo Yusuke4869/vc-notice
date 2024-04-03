@@ -2,7 +2,7 @@ import { ChannelType } from "discord.js";
 import type { Client, CommandInteraction } from "discord.js";
 
 import { setCompletedEmbed, setNotFoundInteractionChannelErrorEmbed } from "../../embed";
-import { db } from "../../main";
+import { getGuildData, upsertGuildData } from "../../repositories/guild";
 import { updateWebhook } from "../../services";
 import { buildEmbed, locale2language } from "../../utils";
 
@@ -20,11 +20,11 @@ export const setChannel = async (client: Client, interaction: CommandInteraction
   }
 
   try {
-    const guildData = await db.getGuildData(guild.id);
+    const guildData = await getGuildData(guild.id);
     const lang = guildData?.lang ?? locale2language(interaction.locale);
     const webhookUrl = await updateWebhook(client, channel, guildData?.webhookUrl ?? null);
 
-    await db.updateGuildData(guild.id, {
+    await upsertGuildData({
       name: guild.name,
       id: guild.id,
       lang: lang,
