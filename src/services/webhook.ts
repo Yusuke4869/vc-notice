@@ -1,14 +1,14 @@
-/* eslint-disable no-empty */
 import { WebhookClient } from "discord.js";
 import type { Client, EmbedBuilder, Guild, TextChannel } from "discord.js";
 
 /**
  * Webhookを使用して埋め込みを送信します
+ *
  * @param client Discord Bot Client
  * @param url 送信するWebhook URL
  * @param embed 送信する埋め込み
  */
-export const send = async (client: Client, url: string | undefined, embed: EmbedBuilder) => {
+export const sendWebhook = async (client: Client, url: string | undefined, embed: EmbedBuilder) => {
   if (!url) return;
 
   try {
@@ -18,22 +18,28 @@ export const send = async (client: Client, url: string | undefined, embed: Embed
       avatarURL: client.user?.avatarURL() ?? undefined,
       embeds: [embed],
     });
-  } catch (e) {}
+  } catch (e) {
+    console.error(e);
+  }
 };
 
 /**
  * Webhookの送信先を変更します
+ *
  * @param client Discord Bot Client
  * @param newChannel 新しい送信先チャンネル
- * @param url それまで使用していたWebhook URL
+ * @param prevUrl 変更前のWebhook URL
+ * @returns 新しいWebhook URL
  */
-export const updateWebhook = async (client: Client, newChannel: TextChannel, url: string | null) => {
-  if (url) {
+export const updateWebhook = async (client: Client, newChannel: TextChannel, prevUrl: string | null) => {
+  if (prevUrl) {
     // webhook.edit() ではチャンネル変更ができなかったため、一回削除して再度作成
     try {
-      const webhook = new WebhookClient({ url });
+      const webhook = new WebhookClient({ url: prevUrl });
       await webhook.delete();
-    } catch (e) {}
+    } catch (e) {
+      console.error(e);
+    }
   }
 
   const res = await createWebhook(client, newChannel);
@@ -52,12 +58,12 @@ const createWebhook = async (client: Client, newChannel: TextChannel) => {
 
 /**
  * Webhook URLから送信先チャンネルを返します
- * @param client Discord Bot Client
+ *
  * @param guild URLが存在するギルド
  * @param url チャンネルを返してほしいWebhookのURL
  * @returns テキストチャンネル
  */
-export const getWebhookChannel = async (client: Client, guild: Guild, url: string) => {
+export const getWebhookChannel = async (guild: Guild, url: string) => {
   const webhooks = await guild.fetchWebhooks();
   const webhookId = url
     .replace(/https?:\/\/discord.com\/api\/webhooks\//, "")
@@ -66,10 +72,8 @@ export const getWebhookChannel = async (client: Client, guild: Guild, url: strin
     ?.replace(/\//g, "");
 
   const channelId = webhooks
-    .map((v) => {
-      if (v.id === webhookId) return v.channelId;
-    })
-    .filter((v) => v !== undefined)
+    .filter((v) => v.id === webhookId)
+    .map((v) => v.channelId)
     .at(0);
 
   if (!channelId) return undefined;
