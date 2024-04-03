@@ -2,7 +2,7 @@ import { ChannelType } from "discord.js";
 import type { Client, CommandInteraction } from "discord.js";
 
 import { setCompletedEmbed, setNotFoundInteractionChannelErrorEmbed } from "../../embed";
-import { db } from "../../main";
+import { getGuildData, upsertGuildData } from "../../repositories/guild";
 import { getWebhookChannel, updateWebhook } from "../../services";
 import type { TLanguage } from "../../types";
 import { buildEmbed, locale2language } from "../../utils";
@@ -21,13 +21,13 @@ export const setLangage = async (client: Client, interaction: CommandInteraction
   }
 
   try {
-    const guildData = await db.getGuildData(guild.id);
+    const guildData = await getGuildData(guild.id);
     const lang =
       (interaction.options.data[0].options?.at(0)?.value as TLanguage | undefined) ??
       locale2language(interaction.locale);
     const webhookUrl = guildData?.webhookUrl ?? (await updateWebhook(client, channel, null));
 
-    await db.updateGuildData(guild.id, {
+    await upsertGuildData({
       name: guild.name,
       id: guild.id,
       lang: lang,
@@ -35,7 +35,7 @@ export const setLangage = async (client: Client, interaction: CommandInteraction
       members: guildData?.members ?? [],
     });
 
-    const webhookChannel = await getWebhookChannel(client, guild, webhookUrl);
+    const webhookChannel = await getWebhookChannel(guild, webhookUrl);
     await interaction.reply({
       embeds: [buildEmbed(setCompletedEmbed(webhookChannel, lang), interaction.locale)],
       ephemeral: false,
