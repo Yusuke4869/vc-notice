@@ -1,5 +1,5 @@
 export * from "./join";
 export * from "./mention";
-export * from "./slashCommand";
+export * from "./interaction";
 export * from "./vc";
 export * from "./webhook";
