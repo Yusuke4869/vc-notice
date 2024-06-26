@@ -1,4 +1,4 @@
-import type { EmbedFooterOptions, GuildMember, VoiceBasedChannel } from "discord.js";
+import { EmbedFooterOptions, GuildMember, TimestampStyles, VoiceBasedChannel, channelMention, time } from "discord.js";
 
 import type { EmbedContents, NoticeEmbedText, TLanguage, voiceChannelActivityType } from "../types";
 import { calcTime } from "../utils";
@@ -15,8 +15,8 @@ const noticeText = (channel: VoiceBasedChannel): NoticeEmbedText => ({
       joinedAFK: "Connected AFK Channel",
     },
     description: {
-      joined: `Joined <#${channel.id}>`,
-      leaved: `Leaved <#${channel.id}>`,
+      joined: `Joined ${channelMention(channel.id)}`,
+      leaved: `Leaved ${channelMention(channel.id)}`,
       startedStreaming: "Let's watch the streaming together!",
       endedStreaming: "Please stream again later!",
       startedVideo: "Let's watch the video!",
@@ -47,8 +47,8 @@ const noticeText = (channel: VoiceBasedChannel): NoticeEmbedText => ({
       joinedAFK: "AFKに飛ばされました",
     },
     description: {
-      joined: `<#${channel.id}> に参加しました`,
-      leaved: `<#${channel.id}> から退出しました`,
+      joined: `${channelMention(channel.id)} に参加しました`,
+      leaved: `${channelMention(channel.id)} から退出しました`,
       startedStreaming: "みんなで見よう！",
       endedStreaming: "またやってね！",
       startedVideo: "ビデオを見よう！",
@@ -107,7 +107,7 @@ export const vcEmbed = (
       fields: [
         {
           name: member?.displayName ?? "member",
-          value: `${text.en.description[activityType]}\n\n<t:${Math.floor(new Date().getTime() / 1000)}:F>`,
+          value: `${text.en.description[activityType]}\n\n${time(new Date(), TimestampStyles.LongDateTime)}`,
         },
       ],
     },
@@ -119,7 +119,7 @@ export const vcEmbed = (
       fields: [
         {
           name: member?.displayName ?? "member",
-          value: `${text.ja.description[activityType]}\n\n<t:${Math.floor(new Date().getTime() / 1000)}:F>`,
+          value: `${text.ja.description[activityType]}\n\n${time(new Date(), TimestampStyles.LongDateTime)}`,
         },
       ],
     },
