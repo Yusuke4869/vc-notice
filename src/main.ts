@@ -2,7 +2,7 @@ import { ActivityType, Client, Events, GatewayIntentBits } from "discord.js";
 import dotenv from "dotenv";
 
 import { deleteGuildData } from "./repositories/guild";
-import { join, mention, slashCommand, voiceActivity } from "./services";
+import { commandInteraction, join, mention, voiceActivity } from "./services";
 
 dotenv.config();
 
@@ -47,7 +47,7 @@ client.on(Events.MessageCreate, async (message) => {
 client.on(Events.InteractionCreate, async (interaction) => {
   if (!interaction.isCommand()) return;
 
-  await slashCommand(client, interaction);
+  await commandInteraction(client, interaction);
 });
 
 // 通話イベント
