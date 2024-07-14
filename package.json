@@ -10,10 +10,10 @@
     "start": "node dist/main.js",
     "start-vc-notice": "node dist/main.js",
     "deploy:commands": "node dist/commandsRegistration/deploy.js",
-    "lint": "eslint --ignore-path .gitignore src/**/*.ts",
-    "lint:fix": "eslint --ignore-path .gitignore src/**/*.ts --fix",
-    "format": "prettier --write src/**/*.ts",
-    "check": "prettier --check src/**/*.ts",
+    "lint": "eslint src/",
+    "lint:fix": "eslint src/",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
     "prepare": "husky install"
   },
   "lint-staged": {
@@ -33,15 +33,16 @@
     "mongodb": "^6.0.0"
   },
   "devDependencies": {
-    "@trivago/prettier-plugin-sort-imports": "^4.0.0",
     "@types/node": "^20.0.0",
     "@typescript-eslint/eslint-plugin": "^7.0.0",
     "@typescript-eslint/parser": "^7.0.0",
     "eslint": "^8.18.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-import-resolver-typescript": "^3.6.1",
+    "eslint-plugin-import": "^2.29.1",
     "husky": "^9.0.0",
     "lint-staged": "^15.0.0",
     "prettier": "^3.0.0",
-    "ts-node": "^10.8.1",
     "ts-node-dev": "^2.0.0",
     "typescript": "^5.0.0"
   }

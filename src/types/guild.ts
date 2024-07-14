@@ -1,7 +1,12 @@
+import type { TLanguage } from "./language";
 import type { Snowflake } from "discord.js";
 
-import type { TLanguage } from "./language";
-import type { Member } from "./member";
+export interface Member {
+  name: string;
+  id: Snowflake;
+  joinedAt: number | null;
+  totalTime: number;
+}
 
 export interface Guild {
   name: string;

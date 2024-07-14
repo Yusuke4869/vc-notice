@@ -1,11 +1,11 @@
-import type { TextChannel } from "discord.js";
+import { defaultColor, getLanguageText } from "../../../utils";
 
 import type { EmbedContents, TLanguage } from "../../../types";
-import { defaultColor, getLanguageText } from "../../../utils";
+import type { TextChannel } from "discord.js";
 
 export const setCompletedEmbed = (
   notificationChannel: TextChannel | undefined,
-  language: TLanguage,
+  language: TLanguage
 ): EmbedContents => ({
   en: {
     title: notificationChannel ? "Set up completed!" : "Set up not completed yet",

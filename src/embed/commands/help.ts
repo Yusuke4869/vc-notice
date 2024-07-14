@@ -7,11 +7,11 @@ export const helpEmbed = (hasManageGuild: boolean): EmbedContents => {
       description: "List of major commands",
       fields: [
         {
-          name: "/ping",
+          name: "`/ping`",
           value: "replies with pong!",
         },
         {
-          name: "/about",
+          name: "`/about`",
           value: "show about this bot",
         },
       ],
@@ -21,11 +21,11 @@ export const helpEmbed = (hasManageGuild: boolean): EmbedContents => {
       description: "主要コマンド一覧",
       fields: [
         {
-          name: "/ping",
+          name: "`/ping`",
           value: "pong! と返します",
         },
         {
-          name: "/about",
+          name: "`/about`",
           value: "このBotについて表示します",
         },
       ],

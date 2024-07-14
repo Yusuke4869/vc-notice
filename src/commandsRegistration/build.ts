@@ -1,7 +1,7 @@
 import { SlashCommandBuilder } from "@discordjs/builders";
-import type { SlashCommandSubcommandsOnlyBuilder } from "discord.js";
 
 import type { SlashCommandConfig } from "./type";
+import type { SlashCommandSubcommandsOnlyBuilder } from "discord.js";
 
 export const buildCommands = (commands: SlashCommandConfig[]): SlashCommandSubcommandsOnlyBuilder[] =>
   commands.map((commandConfig) => {
@@ -41,9 +41,9 @@ export const buildCommands = (commands: SlashCommandConfig[]): SlashCommandSubco
                       ja: choice.name.ja,
                     },
                     value: choice.value,
-                  })),
-                ),
-            ),
+                  }))
+                )
+            )
           );
         }
 

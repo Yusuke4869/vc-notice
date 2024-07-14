@@ -1,7 +1,7 @@
-import type { CommandInteraction } from "discord.js";
-
 import { setHelpEmbed } from "../../embed";
 import { buildEmbed } from "../../utils";
+
+import type { CommandInteraction } from "discord.js";
 
 export const setHelp = async (interaction: CommandInteraction) => {
   try {

@@ -1,7 +1,6 @@
-import type { APIEmbedField, ColorResolvable, EmbedAuthorOptions, EmbedFooterOptions } from "discord.js";
-
 import type { TLanguage } from "./language";
 import type { voiceChannelActivityType } from "./vc";
+import type { APIEmbedField, ColorResolvable, EmbedAuthorOptions, EmbedFooterOptions } from "discord.js";
 
 export type EmbedContents = {
   [key in TLanguage]: {
