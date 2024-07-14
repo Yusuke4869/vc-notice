@@ -12,8 +12,8 @@
     "deploy:commands": "node dist/commandsRegistration/deploy.js",
     "lint": "eslint --ignore-path .gitignore src/**/*.ts",
     "lint:fix": "eslint --ignore-path .gitignore src/**/*.ts --fix",
-    "format": "prettier --write src/**/*.ts",
-    "check": "prettier --check src/**/*.ts",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
     "prepare": "husky install"
   },
   "lint-staged": {
@@ -33,7 +33,6 @@
     "mongodb": "^6.0.0"
   },
   "devDependencies": {
-    "@trivago/prettier-plugin-sort-imports": "^4.0.0",
     "@types/node": "^20.0.0",
     "@typescript-eslint/eslint-plugin": "^7.0.0",
     "@typescript-eslint/parser": "^7.0.0",
