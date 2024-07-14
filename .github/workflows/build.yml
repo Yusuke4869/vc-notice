@@ -1,20 +1,20 @@
-name: Build
+name: build
 on: [push, pull_request]
 
 jobs:
-  run-build:
+  build:
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Setup Node.js environment
+      - name: Set up node.js environment
         uses: actions/setup-node@main
         with:
           node-version-file: package.json
 
-      - name: Install Dependencies
+      - name: Install dependencies
         run: yarn install --frozen-lockfile
 
       - name: Build

@@ -1,21 +1,21 @@
-name: Prettier
+name: format
 on: [push, pull_request]
 
 jobs:
-  run-prettier:
+  format:
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Setup Node.js environment
+      - name: Set up node.js environment
         uses: actions/setup-node@main
         with:
           node-version-file: package.json
 
-      - name: Install Dependencies
+      - name: Install dependencies
         run: yarn install --frozen-lockfile
 
-      - name: Prettier Check
+      - name: Check format
         run: yarn run check
