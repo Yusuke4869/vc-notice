@@ -1,7 +1,9 @@
-import { ColorResolvable, EmbedBuilder, Locale } from "discord.js";
+import { EmbedBuilder } from "discord.js";
+
+import { locale2language } from "./language";
 
 import type { EmbedContents, TLanguage } from "../types";
-import { locale2language } from "./language";
+import type { ColorResolvable, Locale } from "discord.js";
 
 export const defaultColor: ColorResolvable = "#faa61a";
 

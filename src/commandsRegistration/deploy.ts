@@ -1,11 +1,12 @@
+/* eslint-disable @typescript-eslint/no-misused-promises */
 import { REST } from "@discordjs/rest";
 import { Client, IntentsBitField, Routes } from "discord.js";
-import dotenv from "dotenv";
+import { config } from "dotenv";
 
 import { buildCommands } from "./build";
 import { slashCommands } from "./commands";
 
-dotenv.config();
+config();
 
 const client = new Client({ intents: new IntentsBitField() });
 const TOKEN = process.env.DISCORD_TOKEN ?? "";
@@ -21,10 +22,16 @@ client.once("ready", async () => {
   // コマンド登録（グローバル）
   rest
     .put(Routes.applicationCommands(clientUser.id), { body: commands })
-    .then(() => console.log("Successfully reloaded application (/) commands."))
-    .catch(console.error);
+    .then(() => {
+      console.log("Successfully reloaded application (/) commands.");
+    })
+    .catch((e: unknown) => {
+      console.error(e);
+    });
 
-  client.destroy();
+  await client.destroy();
 });
 
-client.login(TOKEN).catch(console.error);
+client.login(TOKEN).catch((e: unknown) => {
+  console.error(e);
+});

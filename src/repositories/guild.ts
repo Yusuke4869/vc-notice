@@ -1,11 +1,12 @@
-import type { Snowflake } from "discord.js";
-import dotenv from "dotenv";
-import type { Collection } from "mongodb";
+import { config } from "dotenv";
 
-import type { Guild } from "../types/guild";
 import { connectToMongodb } from "./mongodb";
 
-dotenv.config();
+import type { Guild } from "../types/guild";
+import type { Snowflake } from "discord.js";
+import type { Collection } from "mongodb";
+
+config();
 const COLLECTION_NAME = process.env.DB_COLLECTION_NAME ?? "vc-notice";
 
 let collection: Collection<Guild> | undefined;
@@ -27,7 +28,7 @@ export const getGuildData = async (guildId: string): Promise<Guild | null> => {
     const collection = await getMongodbCollection();
     if (!collection) return null;
 
-    return collection.findOne({ id: guildId });
+    return await collection.findOne({ id: guildId });
   } catch (e) {
     console.error(e);
     return null;
@@ -39,8 +40,8 @@ export const upsertGuildData = async (data: Guild): Promise<boolean> => {
     const collection = await getMongodbCollection();
     if (!collection) return false;
 
-    const r = collection.replaceOne({ id: data.id }, data, { upsert: true });
-    return (await r).acknowledged;
+    const r = await collection.replaceOne({ id: data.id }, data, { upsert: true });
+    return typeof r.acknowledged === "boolean" && r.acknowledged;
   } catch (e) {
     console.error(e);
     return false;
@@ -52,8 +53,8 @@ export const deleteGuildData = async (guildId: Snowflake): Promise<boolean> => {
     const collection = await getMongodbCollection();
     if (!collection) return false;
 
-    const r = collection.deleteOne({ id: guildId });
-    return (await r).acknowledged;
+    const r = await collection.deleteOne({ id: guildId });
+    return r.acknowledged;
   } catch (e) {
     console.error(e);
     return false;

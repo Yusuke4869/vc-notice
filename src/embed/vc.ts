@@ -1,7 +1,9 @@
-import { EmbedFooterOptions, GuildMember, TimestampStyles, VoiceBasedChannel, channelMention, time } from "discord.js";
+import { TimestampStyles, channelMention, time } from "discord.js";
+
+import { calcTime } from "../utils";
 
 import type { EmbedContents, NoticeEmbedText, TLanguage, voiceChannelActivityType } from "../types";
-import { calcTime } from "../utils";
+import type { EmbedFooterOptions, GuildMember, VoiceBasedChannel } from "discord.js";
 
 const noticeText = (channel: VoiceBasedChannel): NoticeEmbedText => ({
   en: {
@@ -73,7 +75,7 @@ const noticeText = (channel: VoiceBasedChannel): NoticeEmbedText => ({
 const generateFooter = (
   text: NoticeEmbedText,
   activityType: voiceChannelActivityType,
-  passedTime?: number,
+  passedTime?: number
 ): Record<TLanguage, EmbedFooterOptions> | null => {
   if (!passedTime) return null;
   if (activityType !== "leaved" && activityType !== "joinedAFK") return null;
@@ -93,7 +95,7 @@ export const vcEmbed = (
   member: GuildMember | null,
   channel: VoiceBasedChannel,
   activityType: voiceChannelActivityType,
-  passedTime?: number,
+  passedTime?: number
 ): EmbedContents => {
   const text = noticeText(channel);
   const footerText = generateFooter(text, activityType, passedTime);

@@ -1,11 +1,12 @@
 import { ChannelType } from "discord.js";
-import type { Client, CommandInteraction } from "discord.js";
 
 import { setCompletedEmbed, setNotFoundInteractionChannelErrorEmbed } from "../../embed";
 import { getGuildData, upsertGuildData } from "../../repositories/guild";
 import { getWebhookChannel, updateWebhook } from "../../services";
-import type { TLanguage } from "../../types";
 import { buildEmbed, locale2language } from "../../utils";
+
+import type { TLanguage } from "../../types";
+import type { Client, CommandInteraction } from "discord.js";
 
 export const setLangage = async (client: Client, interaction: CommandInteraction) => {
   const guild = interaction.guild;

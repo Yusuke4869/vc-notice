@@ -1,7 +1,7 @@
-import type { GuildMember } from "discord.js";
-
 import { upsertGuildData } from "../../repositories/guild";
+
 import type { Guild, Member } from "../../types";
+import type { GuildMember } from "discord.js";
 
 export const addJoinedAt = async (guildData: Guild, member: GuildMember, joinedAt: number): Promise<boolean> => {
   try {

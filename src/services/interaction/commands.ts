@@ -1,6 +1,6 @@
-import type { Client, CommandInteraction } from "discord.js";
-
 import { about, help, ping, set } from "../../commands";
+
+import type { Client, CommandInteraction } from "discord.js";
 
 export const commandInteraction = async (client: Client, interaction: CommandInteraction) => {
   const { commandName } = interaction;

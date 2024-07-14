@@ -1,10 +1,10 @@
-import type { Client, CommandInteraction } from "discord.js";
-
-import { dmErrorEmbed, noPermissionErrorEmbed } from "../../embed";
-import { buildEmbed } from "../../utils";
 import { setChannel } from "./channel";
 import { setHelp } from "./help";
 import { setLangage } from "./language";
+import { dmErrorEmbed, noPermissionErrorEmbed } from "../../embed";
+import { buildEmbed } from "../../utils";
+
+import type { Client, CommandInteraction } from "discord.js";
 
 export const set = async (client: Client, interaction: CommandInteraction) => {
   // DMで送信された場合

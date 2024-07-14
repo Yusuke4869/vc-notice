@@ -1,10 +1,11 @@
+/* eslint-disable @typescript-eslint/no-misused-promises */
 import { ActivityType, Client, Events, GatewayIntentBits } from "discord.js";
-import dotenv from "dotenv";
+import { config } from "dotenv";
 
 import { deleteGuildData } from "./repositories/guild";
 import { commandInteraction, join, mention, voiceActivity } from "./services";
 
-dotenv.config();
+config();
 
 const intents = [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages, GatewayIntentBits.GuildVoiceStates];
 
@@ -12,6 +13,7 @@ const client = new Client({ intents });
 const TOKEN = process.env.DISCORD_TOKEN;
 
 // 起動イベント
+// eslint-disable-next-line @typescript-eslint/require-await
 client.once(Events.ClientReady, async () => {
   const clientUser = client.user;
   if (!clientUser) throw new Error("Error: Cannot connect to Discord!");
@@ -19,11 +21,13 @@ client.once(Events.ClientReady, async () => {
   console.info(`Logged in as ${clientUser.tag} at ${new Date().toString()}`);
 
   setInterval(() => {
-    clientUser.setActivity(`ping: ${client.ws.ping}ms`, { type: ActivityType.Playing });
+    clientUser.setActivity(`ping: ${client.ws.ping.toString()}ms`, { type: ActivityType.Playing });
   }, 1000 * 10);
 });
 
-client.login(TOKEN).catch(console.error);
+client.login(TOKEN).catch((e: unknown) => {
+  console.error(e);
+});
 
 // bot参加イベント
 client.on(Events.GuildCreate, async (guild) => {

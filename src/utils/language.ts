@@ -1,6 +1,7 @@
 import { Locale } from "discord.js";
 
 import { Language } from "../types";
+
 import type { TLanguage } from "../types";
 
 export const locale2language = (loc: Locale): TLanguage => {
@@ -12,6 +13,7 @@ export const locale2language = (loc: Locale): TLanguage => {
 
 export const getLanguageText = (lang: TLanguage): string => {
   if (lang === Language.English) return "English";
+  // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
   else if (lang === Language.Japanese) return "日本語";
   else return "English";
 };

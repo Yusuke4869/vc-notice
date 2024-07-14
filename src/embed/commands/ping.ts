@@ -6,7 +6,7 @@ export const pingEmbed = (ping: number): EmbedContents => ({
     fields: [
       {
         name: "Latency",
-        value: `${ping}ms`,
+        value: `${ping.toString()}ms`,
       },
     ],
   },
@@ -15,7 +15,7 @@ export const pingEmbed = (ping: number): EmbedContents => ({
     fields: [
       {
         name: "Latency",
-        value: `${ping}ms`,
+        value: `${ping.toString()}ms`,
       },
     ],
   },

@@ -1,8 +1,9 @@
-import type { Message } from "discord.js";
 import { Locale } from "discord.js";
 
 import { mentionHelpEmbed } from "../../embed";
 import { buildEmbed } from "../../utils";
+
+import type { Message } from "discord.js";
 
 export const mention = async (message: Message) => {
   try {

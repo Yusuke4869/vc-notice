@@ -1,6 +1,5 @@
-import type { Snowflake } from "discord.js";
-
 import type { TLanguage } from "./language";
+import type { Snowflake } from "discord.js";
 
 export interface Member {
   name: string;

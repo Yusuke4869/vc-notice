@@ -1,7 +1,7 @@
-import type { Client, CommandInteraction } from "discord.js";
-
 import { pingEmbed } from "../embed";
 import { buildEmbed } from "../utils";
+
+import type { Client, CommandInteraction } from "discord.js";
 
 export const ping = async (client: Client, interaction: CommandInteraction) => {
   try {

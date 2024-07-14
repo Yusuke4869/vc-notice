@@ -1,5 +1,5 @@
-# VC Notice  
+# VC Notice
 
-## License  
+## License
 
-MIT  
+MIT

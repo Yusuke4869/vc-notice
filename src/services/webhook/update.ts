@@ -1,5 +1,16 @@
 import { WebhookClient } from "discord.js";
+
 import type { Client, TextChannel } from "discord.js";
+
+// export はせずに updateWebhook() から呼び出すように
+const createWebhook = async (client: Client, newChannel: TextChannel) => {
+  const webhook = await newChannel.createWebhook({
+    name: client.user?.username ?? "VC Notice",
+    avatar: client.user?.avatarURL(),
+  });
+
+  return webhook.url;
+};
 
 /**
  * Webhookの送信先を変更します
@@ -22,14 +33,4 @@ export const updateWebhook = async (client: Client, newChannel: TextChannel, pre
 
   const res = await createWebhook(client, newChannel);
   return res;
-};
-
-// export はせずに updateWebhook() から呼び出すように
-const createWebhook = async (client: Client, newChannel: TextChannel) => {
-  const webhook = await newChannel.createWebhook({
-    name: client.user?.username ?? "VC Notice",
-    avatar: client.user?.avatarURL(),
-  });
-
-  return webhook.url;
 };
