@@ -1,60 +1,10 @@
-import type { Client, GuildMember, VoiceState } from "discord.js";
+import type { Client, VoiceState } from "discord.js";
 
-import { vcEmbed } from "../embed/vc";
-import { getGuildData, upsertGuildData } from "../repositories/guild";
-import type { Guild, Member } from "../types";
-import { buildEmbed } from "../utils";
-import { sendWebhook } from "./webhook";
-
-const addJoinedAt = async (guildData: Guild, member: GuildMember, joinedAt: number): Promise<boolean> => {
-  try {
-    const memberData = guildData.members.find((v) => v.id === member.id);
-    const otherMembersData = guildData.members.filter((v) => v.id !== member.id);
-    const newMemberData: Member = {
-      name: member.displayName,
-      id: member.id,
-      joinedAt: joinedAt,
-      totalTime: memberData?.totalTime ?? 0,
-    };
-
-    const res = await upsertGuildData({
-      name: member.guild.name,
-      id: member.guild.id,
-      lang: guildData.lang,
-      webhookUrl: guildData.webhookUrl,
-      members: [...otherMembersData, newMemberData],
-    });
-    return res;
-  } catch (e) {
-    console.error(e);
-    return false;
-  }
-};
-
-const addTotalTime = async (guildData: Guild, member: GuildMember, passedTime: number): Promise<boolean> => {
-  try {
-    const memberData = guildData.members.find((v) => v.id === member.id);
-    const otherMembersData = guildData.members.filter((v) => v.id !== member.id);
-    const newMemberData: Member = {
-      name: member.displayName,
-      id: member.id,
-      joinedAt: null,
-      totalTime: (memberData?.totalTime ?? 0) + passedTime,
-    };
-
-    const res = await upsertGuildData({
-      name: member.guild.name,
-      id: member.guild.id,
-      lang: guildData.lang,
-      webhookUrl: guildData.webhookUrl,
-      members: [...otherMembersData, newMemberData],
-    });
-    return res;
-  } catch (e) {
-    console.error(e);
-    return false;
-  }
-};
+import { vcEmbed } from "../../embed/vc";
+import { getGuildData } from "../../repositories/guild";
+import { buildEmbed } from "../../utils";
+import { sendWebhook } from "../webhook";
+import { addJoinedAt, addTotalTime } from "./time";
 
 export const voiceActivity = async (client: Client, oldVoiceState: VoiceState, newVoiceState: VoiceState) => {
   const guildData = await getGuildData(newVoiceState.guild.id);
@@ -65,8 +15,6 @@ export const voiceActivity = async (client: Client, oldVoiceState: VoiceState, n
 
   const { webhookUrl } = guildData;
   const unixtime = Math.floor(new Date().getTime() / 1000);
-  let isLeaved = false;
-
   const memberData = guildData?.members.find((v) => v.id === newVoiceState.member?.id);
   const joinedAt = memberData?.joinedAt;
   const passedTime = joinedAt ? unixtime - joinedAt : 0;
@@ -82,7 +30,8 @@ export const voiceActivity = async (client: Client, oldVoiceState: VoiceState, n
         guildData.lang,
       ),
     );
-    newVoiceState.member && (await addJoinedAt(guildData, newVoiceState.member, unixtime));
+
+    if (newVoiceState.member) await addJoinedAt(guildData, newVoiceState.member, unixtime);
   }
   // 退出
   else if (oldVoiceState.channel && !newVoiceState.channel) {
@@ -95,7 +44,8 @@ export const voiceActivity = async (client: Client, oldVoiceState: VoiceState, n
         guildData.lang,
       ),
     );
-    isLeaved = true;
+
+    if (newVoiceState.member) await addTotalTime(guildData, newVoiceState.member, passedTime);
   }
   // 前後のチャンネルが同じ
   else if (oldVoiceState.channelId === newVoiceState.channelId && newVoiceState.channel) {
@@ -165,7 +115,8 @@ export const voiceActivity = async (client: Client, oldVoiceState: VoiceState, n
           guildData.lang,
         ),
       );
-      isLeaved = true;
+
+      if (newVoiceState.member) await addTotalTime(guildData, newVoiceState.member, passedTime);
     }
     // チャンネル移動
     else {
@@ -180,6 +131,4 @@ export const voiceActivity = async (client: Client, oldVoiceState: VoiceState, n
       );
     }
   }
-
-  if (isLeaved && newVoiceState.member) await addTotalTime(guildData, newVoiceState.member, passedTime);
 };

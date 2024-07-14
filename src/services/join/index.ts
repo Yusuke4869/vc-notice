@@ -1,7 +1,7 @@
 import type { Guild } from "discord.js";
 
-import { joinEmbed } from "../embed/join";
-import { buildEmbed } from "../utils";
+import { joinEmbed } from "../../embed/join";
+import { buildEmbed } from "../../utils";
 
 export const join = async (guild: Guild) => {
   try {
