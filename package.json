@@ -24,7 +24,7 @@
   },
   "packageManager": "yarn@4.4.0",
   "volta": {
-    "node": "20.16.0"
+    "node": "20.17.0"
   },
   "dependencies": {
     "discord-api-types": "^0.37.0",
