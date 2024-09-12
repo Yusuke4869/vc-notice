@@ -1230,8 +1230,8 @@ __metadata:
   linkType: hard
 
 "discord.js@npm:^14.0.0":
-  version: 14.16.1
-  resolution: "discord.js@npm:14.16.1"
+  version: 14.16.2
+  resolution: "discord.js@npm:14.16.2"
   dependencies:
     "@discordjs/builders": "npm:^1.9.0"
     "@discordjs/collection": "npm:1.5.3"
@@ -1245,7 +1245,7 @@ __metadata:
     lodash.snakecase: "npm:4.1.1"
     tslib: "npm:^2.6.3"
     undici: "npm:6.19.8"
-  checksum: 10c0/612b490f0ffd890878dec55aa3d6f681c1eb20c5f2295af9a03f261e3ffcd5a7e36c91b06a2c466483ae5f4b2dec9d9e16ba50d000b1e220024d3e95ab7f8786
+  checksum: 10c0/2b4289d6a3b3f5c2978dbfa840225d2f789eaf161ae85bf12e0125b5096eb64562c170dfc7f0d1ee389beb565cabe45733a27853178b2d0dc78548b5d1a83338
   languageName: node
   linkType: hard
 
