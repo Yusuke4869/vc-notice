@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-misused-promises */
-import { REST } from "@discordjs/rest";
-import { Client, IntentsBitField, Routes } from "discord.js";
+import { Client, IntentsBitField, Routes, REST } from "discord.js";
 import { config } from "dotenv";
 
 import { buildCommands } from "./build";
