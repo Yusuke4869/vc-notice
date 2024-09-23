@@ -12,6 +12,11 @@ const intents = [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages, Gate
 const client = new Client({ intents });
 const TOKEN = process.env.DISCORD_TOKEN;
 
+console.info(`
+Node.js version: ${process.version}
+Process ID: ${process.pid.toString()}
+`);
+
 // 起動イベント
 // eslint-disable-next-line @typescript-eslint/require-await
 client.once(Events.ClientReady, async () => {
