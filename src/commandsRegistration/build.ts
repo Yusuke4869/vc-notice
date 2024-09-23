@@ -11,7 +11,6 @@ export const buildCommands = (commands: SlashCommandConfig[]): SlashCommandSubco
       .setDescriptionLocalizations({
         ja: commandConfig.description.ja,
       })
-      .setDMPermission(commandConfig.allowDM)
       .setDefaultMemberPermissions(commandConfig.permissions ?? null);
 
     if (!commandConfig.subCommands) return command;

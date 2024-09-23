@@ -9,9 +9,8 @@ import type { Guild, TextChannel } from "discord.js";
  */
 export const getWebhookChannel = async (guild: Guild, url: string) => {
   const webhooks = await guild.fetchWebhooks();
-  const webhookId = url
-    .replace(/https?:\/\/discord.com\/api\/webhooks\//, "")
-    .match(/\d+\//)
+  const webhookId = /\d+\//
+    .exec(url.replace(/https?:\/\/discord.com\/api\/webhooks\//, ""))
     ?.at(0)
     ?.replace(/\//g, "");
 
