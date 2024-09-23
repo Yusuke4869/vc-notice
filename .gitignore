@@ -7,9 +7,5 @@ dist/
 # env
 .env
 
-# yarn
-.yarn/*
-!.yarn/releases
-
 # git hook
 .husky/prepare-commit-msg
