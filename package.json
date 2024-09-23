@@ -10,24 +10,22 @@
     "start": "node dist/main.js",
     "start-vc-notice": "node dist/main.js",
     "deploy:commands": "node dist/commandsRegistration/deploy.js",
-    "lint": "eslint src/",
-    "lint:fix": "eslint src/",
+    "lint": "eslint --fix **/*.{js,ts} && prettier --write .",
+    "lint:check": "eslint **/*.{js,ts}",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "prepare": "husky install"
   },
   "lint-staged": {
-    "src/**/*.ts": [
-      "yarn lint:fix",
-      "yarn format"
+    "**/*.{js,ts}": [
+      "pnpm lint"
     ]
   },
-  "packageManager": "yarn@4.5.0",
+  "packageManager": "pnpm@9.11.0+sha512.0a203ffaed5a3f63242cd064c8fb5892366c103e328079318f78062f24ea8c9d50bc6a47aa3567cabefd824d170e78fa2745ed1f16b132e16436146b7688f19b",
   "volta": {
     "node": "20.17.0"
   },
   "dependencies": {
-    "discord-api-types": "^0.37.0",
     "discord.js": "^14.0.0",
     "dotenv": "^16.0.1",
     "mongodb": "^6.0.0"
