@@ -20,5 +20,5 @@ jobs:
       - name: Install Dependencies
         run: pnpm install --frozen-lockfile
 
-      - name: Link Check
+      - name: Lint Check
         run: pnpm lint:check
