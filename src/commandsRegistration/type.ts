@@ -1,6 +1,6 @@
 import type { TLanguage } from "../types/language";
 
-type SlashCommandSubcommandConfig = {
+interface SlashCommandSubcommandConfig {
   name: string;
   description: {
     [key in TLanguage]: string;
@@ -18,9 +18,9 @@ type SlashCommandSubcommandConfig = {
       value: string;
     }[];
   }[];
-};
+}
 
-export type SlashCommandConfig = {
+export interface SlashCommandConfig {
   name: string;
   description: {
     [key in TLanguage]: string;
@@ -28,4 +28,4 @@ export type SlashCommandConfig = {
   allowDM: boolean;
   permissions?: bigint | null;
   subCommands?: SlashCommandSubcommandConfig[];
-};
+}
