@@ -23,6 +23,7 @@ export const voiceActivity = async (client: Client, oldVoiceState: VoiceState, n
   if (!oldVoiceState.channel && newVoiceState.channel) {
     await sendWebhook(
       client,
+      newVoiceState.guild,
       webhookUrl,
       buildEmbed(
         vcEmbed(newVoiceState.member, newVoiceState.channel, "joined", passedTime),
@@ -37,6 +38,7 @@ export const voiceActivity = async (client: Client, oldVoiceState: VoiceState, n
   else if (oldVoiceState.channel && !newVoiceState.channel) {
     await sendWebhook(
       client,
+      oldVoiceState.guild,
       webhookUrl,
       buildEmbed(
         vcEmbed(newVoiceState.member, oldVoiceState.channel, "leaved", passedTime),
@@ -55,6 +57,7 @@ export const voiceActivity = async (client: Client, oldVoiceState: VoiceState, n
       if (!oldVoiceState.streaming && newVoiceState.streaming) {
         await sendWebhook(
           client,
+          newVoiceState.guild,
           webhookUrl,
           buildEmbed(
             vcEmbed(newVoiceState.member, newVoiceState.channel, "startedStreaming", passedTime),
@@ -67,6 +70,7 @@ export const voiceActivity = async (client: Client, oldVoiceState: VoiceState, n
       else if (oldVoiceState.streaming && !newVoiceState.streaming) {
         await sendWebhook(
           client,
+          newVoiceState.guild,
           webhookUrl,
           buildEmbed(
             vcEmbed(newVoiceState.member, newVoiceState.channel, "endedStreaming", passedTime),
@@ -82,6 +86,7 @@ export const voiceActivity = async (client: Client, oldVoiceState: VoiceState, n
       if (!oldVoiceState.selfVideo && newVoiceState.selfVideo)
         await sendWebhook(
           client,
+          newVoiceState.guild,
           webhookUrl,
           buildEmbed(
             vcEmbed(newVoiceState.member, newVoiceState.channel, "startedVideo", passedTime),
@@ -93,6 +98,7 @@ export const voiceActivity = async (client: Client, oldVoiceState: VoiceState, n
       else if (oldVoiceState.selfVideo && !newVoiceState.selfVideo)
         await sendWebhook(
           client,
+          newVoiceState.guild,
           webhookUrl,
           buildEmbed(
             vcEmbed(newVoiceState.member, newVoiceState.channel, "endedVideo", passedTime),
@@ -108,6 +114,7 @@ export const voiceActivity = async (client: Client, oldVoiceState: VoiceState, n
     if (newVoiceState.channelId === newVoiceState.guild.afkChannelId) {
       await sendWebhook(
         client,
+        newVoiceState.guild,
         webhookUrl,
         buildEmbed(
           vcEmbed(newVoiceState.member, newVoiceState.channel, "joinedAFK", passedTime),
@@ -122,6 +129,7 @@ export const voiceActivity = async (client: Client, oldVoiceState: VoiceState, n
     else {
       await sendWebhook(
         client,
+        newVoiceState.guild,
         webhookUrl,
         buildEmbed(
           vcEmbed(newVoiceState.member, newVoiceState.channel, "joined", passedTime),

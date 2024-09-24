@@ -23,13 +23,13 @@ export const setChannel = async (client: Client, interaction: CommandInteraction
   try {
     const guildData = await getGuildData(guild.id);
     const lang = guildData?.lang ?? locale2language(interaction.locale);
-    const webhookUrl = await updateWebhook(client, channel, guildData?.webhookUrl ?? null);
+    const webhookUrl = await updateWebhook(client, channel, guildData?.webhookUrl);
 
     await upsertGuildData({
       name: guild.name,
       id: guild.id,
       lang: lang,
-      webhookUrl: webhookUrl,
+      webhookUrl: webhookUrl ?? undefined,
       members: guildData?.members ?? [],
     });
 

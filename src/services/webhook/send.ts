@@ -1,16 +1,19 @@
 import { WebhookClient } from "discord.js";
 
-import type { Client, EmbedBuilder } from "discord.js";
+import type { Client, Guild, EmbedBuilder } from "discord.js";
 
 /**
- * Webhookを使用して埋め込みを送信します
- *
- * @param client Discord Bot Client
- * @param url 送信するWebhook URL
- * @param embed 送信する埋め込み
+ * Webhook を用いて Embed を送信します
  */
-export const sendWebhook = async (client: Client, url: string | undefined, embed: EmbedBuilder) => {
+export const sendWebhook = async (client: Client, guild: Guild, url: string | undefined, embed: EmbedBuilder) => {
   if (!url) return;
+
+  try {
+    const webhooks = await guild.fetchWebhooks();
+    if (!webhooks.some((v) => v.url === url)) return;
+  } catch (e) {
+    console.error(e);
+  }
 
   try {
     const webhook = new WebhookClient({ url });
