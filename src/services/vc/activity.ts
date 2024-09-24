@@ -13,6 +13,11 @@ export const voiceActivity = async (client: Client, oldVoiceState: VoiceState, n
     return;
   }
 
+  if (!client.user) {
+    console.error("client.user is undefined");
+    return;
+  }
+
   const { webhookUrl } = guildData;
   const unixtime = Math.floor(new Date().getTime() / 1000);
   const memberData = guildData.members.find((v) => v.id === newVoiceState.member?.id);
@@ -20,7 +25,7 @@ export const voiceActivity = async (client: Client, oldVoiceState: VoiceState, n
   const passedTime = joinedAt ? unixtime - joinedAt : 0;
 
   // 参加
-  if (!oldVoiceState.channel && newVoiceState.channel) {
+  if (!oldVoiceState.channel && newVoiceState.channel?.permissionsFor(client.user)?.has("Connect")) {
     await sendWebhook(
       client,
       newVoiceState.guild,
@@ -35,7 +40,7 @@ export const voiceActivity = async (client: Client, oldVoiceState: VoiceState, n
     if (newVoiceState.member) await addJoinedAt(guildData, newVoiceState.member, unixtime);
   }
   // 退出
-  else if (oldVoiceState.channel && !newVoiceState.channel) {
+  else if (oldVoiceState.channel?.permissionsFor(client.user)?.has("Connect") && !newVoiceState.channel) {
     await sendWebhook(
       client,
       oldVoiceState.guild,
@@ -50,7 +55,10 @@ export const voiceActivity = async (client: Client, oldVoiceState: VoiceState, n
     if (newVoiceState.member) await addTotalTime(guildData, newVoiceState.member, passedTime);
   }
   // 前後のチャンネルが同じ
-  else if (oldVoiceState.channelId === newVoiceState.channelId && newVoiceState.channel) {
+  else if (
+    oldVoiceState.channelId === newVoiceState.channelId &&
+    newVoiceState.channel?.permissionsFor(client.user)?.has("Connect")
+  ) {
     // 配信ステータスが異なるとき
     if (oldVoiceState.streaming !== newVoiceState.streaming) {
       // 配信開始
@@ -109,7 +117,10 @@ export const voiceActivity = async (client: Client, oldVoiceState: VoiceState, n
     }
   }
   // 前後のチャンネルが異なるとき
-  else if (oldVoiceState.channelId !== newVoiceState.channelId && newVoiceState.channel) {
+  else if (
+    oldVoiceState.channelId !== newVoiceState.channelId &&
+    newVoiceState.channel?.permissionsFor(client.user)?.has("Connect")
+  ) {
     // AFKチャンネル参加
     if (newVoiceState.channelId === newVoiceState.guild.afkChannelId) {
       await sendWebhook(
