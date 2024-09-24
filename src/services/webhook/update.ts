@@ -3,34 +3,37 @@ import { WebhookClient } from "discord.js";
 import type { Client, TextChannel } from "discord.js";
 
 // export はせずに updateWebhook() から呼び出すように
-const createWebhook = async (client: Client, newChannel: TextChannel) => {
-  const webhook = await newChannel.createWebhook({
-    name: client.user?.username ?? "VC Notice",
-    avatar: client.user?.avatarURL(),
-  });
+const createWebhook = async (client: Client, channel: TextChannel): Promise<string | null> => {
+  try {
+    const webhook = await channel.createWebhook({
+      name: client.user?.username ?? "VC Notice",
+      avatar: client.user?.avatarURL(),
+    });
 
-  return webhook.url;
+    return webhook.url;
+  } catch (e) {
+    console.error(e);
+    return null;
+  }
 };
 
 /**
- * Webhookの送信先を変更します
- *
- * @param client Discord Bot Client
- * @param newChannel 新しい送信先チャンネル
- * @param prevUrl 変更前のWebhook URL
- * @returns 新しいWebhook URL
+ * Webhook を作成または更新します
+ * @param channel Webhook を送信するチャンネル
+ * @param prevUrl 更新前の Webhook URL
  */
-export const updateWebhook = async (client: Client, newChannel: TextChannel, prevUrl: string | null) => {
+export const updateWebhook = async (client: Client, channel: TextChannel, prevUrl?: string): Promise<string | null> => {
+  // webhook.edit() ではチャンネル変更ができなかったため、一回削除して再度作成
   if (prevUrl) {
-    // webhook.edit() ではチャンネル変更ができなかったため、一回削除して再度作成
     try {
       const webhook = new WebhookClient({ url: prevUrl });
       await webhook.delete();
-    } catch (e) {
-      console.error(e);
-    }
+
+      // 手動で削除された場合に発生するエラーのため無視 (404: Unknown Webhook)
+      // eslint-disable-next-line no-empty
+    } catch {}
   }
 
-  const res = await createWebhook(client, newChannel);
+  const res = await createWebhook(client, channel);
   return res;
 };

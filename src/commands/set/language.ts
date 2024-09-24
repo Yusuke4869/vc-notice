@@ -26,19 +26,23 @@ export const setLangage = async (client: Client, interaction: CommandInteraction
     const lang =
       (interaction.options.data[0].options?.at(0)?.value as TLanguage | undefined) ??
       locale2language(interaction.locale);
-    const webhookUrl = guildData?.webhookUrl ?? (await updateWebhook(client, channel, null));
+    const webhookUrl = guildData?.webhookUrl ?? (await updateWebhook(client, channel));
 
     await upsertGuildData({
       name: guild.name,
       id: guild.id,
       lang: lang,
-      webhookUrl: webhookUrl,
+      webhookUrl: webhookUrl ?? undefined,
       members: guildData?.members ?? [],
     });
 
-    const webhookChannel = await getWebhookChannel(guild, webhookUrl);
     await interaction.reply({
-      embeds: [buildEmbed(setCompletedEmbed(webhookChannel, lang), interaction.locale)],
+      embeds: [
+        buildEmbed(
+          setCompletedEmbed(webhookUrl ? await getWebhookChannel(guild, webhookUrl) : null, lang),
+          interaction.locale
+        ),
+      ],
       ephemeral: false,
     });
   } catch (e) {

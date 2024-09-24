@@ -1,10 +1,12 @@
+import { channelMention } from "discord.js";
+
 import { defaultColor, getLanguageText } from "../../../utils";
 
 import type { EmbedContents, TLanguage } from "../../../types";
-import type { TextChannel } from "discord.js";
+import type { GuildBasedChannel } from "discord.js";
 
 export const setCompletedEmbed = (
-  notificationChannel: TextChannel | undefined,
+  notificationChannel: GuildBasedChannel | null,
   language: TLanguage
 ): EmbedContents => ({
   en: {
@@ -13,7 +15,7 @@ export const setCompletedEmbed = (
     fields: [
       {
         name: "Notification channel",
-        value: notificationChannel ? `<#${notificationChannel.id}>` : "Failed to set up, please try again",
+        value: notificationChannel ? channelMention(notificationChannel.id) : "Failed to set up, please try again",
         inline: true,
       },
       {
@@ -30,7 +32,7 @@ export const setCompletedEmbed = (
       {
         name: "通知チャンネル",
         value: notificationChannel
-          ? `<#${notificationChannel.id}>`
+          ? channelMention(notificationChannel.id)
           : "設定に失敗した可能性があります、もう一度お試しください",
         inline: true,
       },
