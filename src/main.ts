@@ -9,7 +9,7 @@ config();
 
 const intents = [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages, GatewayIntentBits.GuildVoiceStates];
 
-const client = new Client({ intents });
+const client = new Client({ intents, shards: "auto" });
 const TOKEN = process.env.DISCORD_TOKEN;
 
 console.info(`
