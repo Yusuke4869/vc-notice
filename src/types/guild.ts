@@ -13,5 +13,6 @@ export interface Guild {
   id: Snowflake;
   lang: TLanguage;
   webhookUrl: string | undefined;
+  botDisabled: boolean | undefined;
   members: Member[];
 }
