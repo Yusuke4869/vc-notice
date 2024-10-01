@@ -28,7 +28,6 @@ export const toggleBotNotifications = async (client: Client, interaction: Comman
       members: guildData?.members ?? [],
     });
 
-    console.log(interaction.options.data[0].options);
     await interaction.reply({
       embeds: [buildEmbed(toggleBotNotificationsEmbed(disabled), interaction.locale)],
       ephemeral: false,
