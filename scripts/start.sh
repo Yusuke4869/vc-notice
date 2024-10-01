@@ -8,4 +8,9 @@ if [ ! -d ./dist ]; then
   pnpm build
 fi
 
-pnpm start-vc-notice
+pnpm start-vc-notice &
+
+PID_FILE=./vc-notice.pid
+pid=$!
+echo $pid >${PID_FILE}
+exit 0
