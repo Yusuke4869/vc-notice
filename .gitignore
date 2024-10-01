@@ -9,3 +9,6 @@ dist/
 
 # git hook
 .husky/prepare-commit-msg
+
+# pid
+vc-notice.pid
