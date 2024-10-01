@@ -30,6 +30,7 @@ export const setChannel = async (client: Client, interaction: CommandInteraction
       id: guild.id,
       lang: lang,
       webhookUrl: webhookUrl ?? undefined,
+      botDisabled: guildData?.botDisabled ?? false,
       members: guildData?.members ?? [],
     });
 

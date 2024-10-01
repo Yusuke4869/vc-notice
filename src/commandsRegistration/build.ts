@@ -46,6 +46,20 @@ export const buildCommands = (commands: SlashCommandConfig[]): SlashCommandSubco
           );
         }
 
+        if (subcommandConfig.booleanOptions) {
+          subcommandConfig.booleanOptions.forEach((option) =>
+            sc.addBooleanOption((opt) =>
+              opt
+                .setName(option.name.toLowerCase())
+                .setDescription(option.description.en)
+                .setDescriptionLocalizations({
+                  ja: option.description.ja,
+                })
+                .setRequired(option.required)
+            )
+          );
+        }
+
         return sc;
       });
     }

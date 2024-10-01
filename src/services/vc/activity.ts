@@ -18,6 +18,8 @@ export const voiceActivity = async (client: Client, oldVoiceState: VoiceState, n
     return;
   }
 
+  if (newVoiceState.member?.user.bot && guildData.botDisabled) return;
+
   const { webhookUrl } = guildData;
   const unixtime = Math.floor(new Date().getTime() / 1000);
   const memberData = guildData.members.find((v) => v.id === newVoiceState.member?.id);

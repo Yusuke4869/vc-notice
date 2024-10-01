@@ -1,3 +1,4 @@
+import { toggleBotNotifications } from "./bot";
 import { setChannel } from "./channel";
 import { setHelp } from "./help";
 import { setLangage } from "./language";
@@ -30,5 +31,6 @@ export const set = async (client: Client, interaction: CommandInteraction) => {
 
   if (subCommand === "channel") await setChannel(client, interaction);
   else if (subCommand === "language") await setLangage(client, interaction);
+  else if (subCommand === "bot") await toggleBotNotifications(client, interaction);
   else await setHelp(interaction);
 };

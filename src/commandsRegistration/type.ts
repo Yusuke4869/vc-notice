@@ -18,6 +18,13 @@ interface SlashCommandSubcommandConfig {
       value: string;
     }[];
   }[];
+  booleanOptions?: {
+    name: string;
+    description: {
+      [key in TLanguage]: string;
+    };
+    required: boolean;
+  }[];
 }
 
 export interface SlashCommandConfig {
