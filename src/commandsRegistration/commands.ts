@@ -83,6 +83,23 @@ export const slashCommands: SlashCommandConfig[] = [
           },
         ],
       },
+      {
+        name: "bot",
+        description: {
+          en: "Toggle bot user notifications",
+          ja: "Botユーザーの通知を切り替えます",
+        },
+        booleanOptions: [
+          {
+            name: "disabled",
+            description: {
+              en: "True to disable, False to enable",
+              ja: "True で無効、False で有効",
+            },
+            required: true,
+          },
+        ],
+      },
     ],
   },
 ];
