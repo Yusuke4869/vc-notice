@@ -6,11 +6,11 @@ export const setMentionEmbed = (mention: "@everyone" | `<@&${string}>` | undefin
     fields: [
       {
         name: "Mention",
-        value: mention ?? "Failed to set, Please try again",
+        value: mention ?? "Removed the mention",
       },
     ],
     footer: {
-      text: "No mention of moving between voice chats",
+      text: "No mention of moving between voice channels",
     },
   },
   ja: {
@@ -18,11 +18,11 @@ export const setMentionEmbed = (mention: "@everyone" | `<@&${string}>` | undefin
     fields: [
       {
         name: "メンション",
-        value: mention ?? "設定に失敗しました、もう一度お試しください",
+        value: mention ?? "メンションを解除しました",
       },
     ],
     footer: {
-      text: "ボイスチャット間の移動ではメンションされません",
+      text: "ボイスチャンネル間の移動ではメンションされません",
     },
   },
 });
