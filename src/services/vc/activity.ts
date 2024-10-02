@@ -36,7 +36,8 @@ export const voiceActivity = async (client: Client, oldVoiceState: VoiceState, n
         vcEmbed(newVoiceState.member, newVoiceState.channel, "joined", passedTime),
         newVoiceState.guild.preferredLocale,
         guildData.lang
-      )
+      ),
+      guildData.joinMention
     );
 
     if (newVoiceState.member) await addJoinedAt(guildData, newVoiceState.member, unixtime);
