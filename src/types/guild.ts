@@ -14,5 +14,6 @@ export interface Guild {
   lang: TLanguage;
   webhookUrl: string | undefined;
   botDisabled: boolean | undefined;
+  joinMention: "@everyone" | `<@&${string}>` | undefined;
   members: Member[];
 }

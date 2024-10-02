@@ -20,6 +20,7 @@ export const addJoinedAt = async (guildData: Guild, member: GuildMember, joinedA
       lang: guildData.lang,
       webhookUrl: guildData.webhookUrl,
       botDisabled: guildData.botDisabled ?? false,
+      joinMention: guildData.joinMention,
       members: [...otherMembersData, newMemberData],
     });
     return res;
@@ -46,6 +47,7 @@ export const addTotalTime = async (guildData: Guild, member: GuildMember, passed
       lang: guildData.lang,
       webhookUrl: guildData.webhookUrl,
       botDisabled: guildData.botDisabled ?? false,
+      joinMention: guildData.joinMention,
       members: [...otherMembersData, newMemberData],
     });
     return res;

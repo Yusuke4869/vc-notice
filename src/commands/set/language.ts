@@ -34,6 +34,7 @@ export const setLangage = async (client: Client, interaction: CommandInteraction
       lang: lang,
       webhookUrl: webhookUrl ?? undefined,
       botDisabled: guildData?.botDisabled ?? false,
+      joinMention: guildData?.joinMention,
       members: guildData?.members ?? [],
     });
 
