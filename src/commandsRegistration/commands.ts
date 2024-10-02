@@ -100,6 +100,23 @@ export const slashCommands: SlashCommandConfig[] = [
           },
         ],
       },
+      {
+        name: "mention",
+        description: {
+          en: "Set mention for joined notification",
+          ja: "入室通知のメンションを設定します",
+        },
+        roleMentionOptions: [
+          {
+            name: "role",
+            description: {
+              en: "Role to mention",
+              ja: "メンションするロール",
+            },
+            required: true,
+          },
+        ],
+      },
     ],
   },
 ];
