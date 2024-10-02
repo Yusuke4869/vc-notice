@@ -60,6 +60,20 @@ export const buildCommands = (commands: SlashCommandConfig[]): SlashCommandSubco
           );
         }
 
+        if (subcommandConfig.roleMentionOptions) {
+          subcommandConfig.roleMentionOptions.forEach((option) =>
+            sc.addRoleOption((opt) =>
+              opt
+                .setName(option.name.toLowerCase())
+                .setDescription(option.description.en)
+                .setDescriptionLocalizations({
+                  ja: option.description.ja,
+                })
+                .setRequired(option.required)
+            )
+          );
+        }
+
         return sc;
       });
     }

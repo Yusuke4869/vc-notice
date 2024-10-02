@@ -5,7 +5,13 @@ import type { Client, Guild, EmbedBuilder } from "discord.js";
 /**
  * Webhook を用いて Embed を送信します
  */
-export const sendWebhook = async (client: Client, guild: Guild, url: string | undefined, embed: EmbedBuilder) => {
+export const sendWebhook = async (
+  client: Client,
+  guild: Guild,
+  url: string | undefined,
+  embed: EmbedBuilder,
+  content?: string
+) => {
   if (!url) return;
 
   try {
@@ -20,6 +26,7 @@ export const sendWebhook = async (client: Client, guild: Guild, url: string | un
     await webhook.send({
       username: client.user?.username ?? "VC Notice",
       avatarURL: client.user?.avatarURL() ?? undefined,
+      content,
       embeds: [embed],
     });
   } catch (e) {
