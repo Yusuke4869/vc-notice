@@ -113,7 +113,7 @@ export const slashCommands: SlashCommandConfig[] = [
               en: "Role to mention",
               ja: "メンションするロール",
             },
-            required: true,
+            required: false,
           },
         ],
       },
