@@ -1,5 +1,5 @@
 export * from "./completed";
-export * from "./error";
+export * from "./errors";
 export * from "./help";
 export * from "./bot";
 export * from "./mention";
