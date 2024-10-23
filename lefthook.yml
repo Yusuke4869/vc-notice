@@ -1,0 +1,10 @@
+pre-commit:
+  parallel: true
+  commands:
+    lint:
+      glob: "*.ts"
+      run: pnpm lint
+      stage_fixed: true
+    format:
+      run: pnpm format
+      stage_fixed: true

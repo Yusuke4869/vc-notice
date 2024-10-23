@@ -13,13 +13,7 @@
     "lint": "eslint --fix **/*.{js,ts} && prettier --write .",
     "lint:check": "eslint **/*.{js,ts}",
     "format": "prettier --write .",
-    "format:check": "prettier --check .",
-    "prepare": "husky"
-  },
-  "lint-staged": {
-    "**/*.{js,ts}": [
-      "pnpm lint"
-    ]
+    "format:check": "prettier --check ."
   },
   "packageManager": "pnpm@9.12.2+sha512.22721b3a11f81661ae1ec68ce1a7b879425a1ca5b991c975b074ac220b187ce56c708fe5db69f4c962c989452eee76c82877f4ee80f474cebd61ee13461b6228",
   "volta": {
@@ -43,8 +37,7 @@
     "eslint-import-resolver-typescript": "^3.6.3",
     "eslint-plugin-import": "^2.30.0",
     "globals": "^15.9.0",
-    "husky": "^9.0.0",
-    "lint-staged": "^15.0.0",
+    "lefthook": "^1.8.0",
     "prettier": "^3.0.0",
     "ts-node-dev": "^2.0.0",
     "typescript": "^5.0.0",
