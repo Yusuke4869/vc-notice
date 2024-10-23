@@ -37,6 +37,7 @@
     "eslint-import-resolver-typescript": "^3.6.3",
     "eslint-plugin-import": "^2.30.0",
     "globals": "^15.9.0",
+    "lefthook": "^1.8.0",
     "prettier": "^3.0.0",
     "ts-node-dev": "^2.0.0",
     "typescript": "^5.0.0",
