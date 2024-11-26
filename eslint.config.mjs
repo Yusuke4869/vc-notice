@@ -1,9 +1,8 @@
-import { fixupPluginRules } from "@eslint/compat";
 import eslint from "@eslint/js";
-import pluginTs from "@typescript-eslint/eslint-plugin";
+import tsPlugin from "@typescript-eslint/eslint-plugin";
 import tseslintParser from "@typescript-eslint/parser";
 import prettier from "eslint-config-prettier";
-import pluginImport from "eslint-plugin-import";
+import importPlugin from "eslint-plugin-import";
 import globals from "globals";
 import tseslint from "typescript-eslint";
 
@@ -17,30 +16,29 @@ const config = tseslint.config(
       globals: { ...globals.node },
       ecmaVersion: "latest",
       parserOptions: {
-        project: "./tsconfig.json",
+        projectService: true,
+        tsconfigRootDir: import.meta.dirname,
       },
       parser: tseslintParser,
     },
     settings: {
       "import/resolver": {
-        typescript: {},
+        typescript: true,
+        node: true,
       },
       "import/parsers": {
         "@typescript-eslint/parser": [".js", ".ts"],
       },
     },
     plugins: {
-      import: fixupPluginRules(pluginImport),
-      "@typescript-eslint": pluginTs,
+      "@typescript-eslint": tsPlugin,
     },
   },
   eslint.configs.recommended,
-  ...tseslint.configs.recommended,
-  ...tseslint.configs.recommendedTypeChecked,
-  ...tseslint.configs.strict,
   ...tseslint.configs.strictTypeChecked,
-  ...tseslint.configs.stylistic,
   ...tseslint.configs.stylisticTypeChecked,
+  importPlugin.flatConfigs.recommended,
+  importPlugin.flatConfigs.typescript,
   prettier,
   {
     rules: {
