@@ -9,16 +9,16 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Setup Node.js Environment
+      - name: Set up Node.js environment
         uses: actions/setup-node@v4
         with:
           node-version-file: package.json
 
-      - name: Setup pnpm
+      - name: Set up pnpm
         run: corepack enable pnpm
 
-      - name: Install Dependencies
+      - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
-      - name: Lint Check
+      - name: Check lint
         run: pnpm lint:check
