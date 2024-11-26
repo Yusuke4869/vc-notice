@@ -6,5 +6,5 @@ pre-commit:
       run: pnpm lint
       stage_fixed: true
     format:
-      run: pnpm format
+      run: pnpm fmt
       stage_fixed: true
