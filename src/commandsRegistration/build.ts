@@ -1,4 +1,4 @@
-import { SlashCommandBuilder } from "discord.js";
+import { SlashCommandBuilder, ChannelType } from "discord.js";
 
 import type { SlashCommandConfig } from "./type";
 import type { SlashCommandSubcommandsOnlyBuilder } from "discord.js";
@@ -70,6 +70,21 @@ export const buildCommands = (commands: SlashCommandConfig[]): SlashCommandSubco
                   ja: option.description.ja,
                 })
                 .setRequired(option.required)
+            )
+          );
+        }
+
+        if (subcommandConfig.voiceChannelOptions) {
+          subcommandConfig.voiceChannelOptions.forEach((option) =>
+            sc.addChannelOption((opt) =>
+              opt
+                .setName(option.name.toLowerCase())
+                .setDescription(option.description.en)
+                .setDescriptionLocalizations({
+                  ja: option.description.ja,
+                })
+                .setRequired(option.required)
+                .addChannelTypes([ChannelType.GuildVoice])
             )
           );
         }

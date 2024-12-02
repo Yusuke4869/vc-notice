@@ -22,6 +22,11 @@ interface SlashCommandSubcommandConfig {
     description: Record<TLanguage, string>;
     required: boolean;
   }[];
+  voiceChannelOptions?: {
+    name: string;
+    description: Record<TLanguage, string>;
+    required: boolean;
+  }[];
 }
 
 export interface SlashCommandConfig {
