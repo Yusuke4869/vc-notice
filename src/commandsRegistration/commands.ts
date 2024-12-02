@@ -119,4 +119,32 @@ export const slashCommands: SlashCommandConfig[] = [
       },
     ],
   },
+  {
+    name: "check",
+    description: {
+      en: "Check settings",
+      ja: "設定を確認します",
+    },
+    allowDM: false,
+    permissions: PermissionFlagsBits.ManageGuild,
+    subCommands: [
+      {
+        name: "channel",
+        description: {
+          en: "Check notification settings",
+          ja: "チャンネルの通知設定を確認します",
+        },
+        voiceChannelOptions: [
+          {
+            name: "channel",
+            description: {
+              en: "Channel to check",
+              ja: "確認するチャンネル",
+            },
+            required: true,
+          },
+        ],
+      },
+    ],
+  },
 ];
