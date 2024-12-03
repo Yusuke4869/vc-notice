@@ -1,12 +1,10 @@
-import { roleMention } from "discord.js";
-
-import { setNotFoundInteractionChannelErrorEmbed, setMentionEmbed } from "../../embed";
+import { setNotFoundInteractionChannelErrorEmbed, setNoticeEmbed } from "../../embed";
 import { getGuildData, upsertGuildData } from "../../repositories/guild";
 import { buildEmbed, locale2language } from "../../utils";
 
 import type { Client, CommandInteraction } from "discord.js";
 
-export const setMention = async (client: Client, interaction: CommandInteraction) => {
+export const setNotice = async (client: Client, interaction: CommandInteraction) => {
   const guild = interaction.guild;
   if (!guild) {
     await interaction.reply({
@@ -19,8 +17,7 @@ export const setMention = async (client: Client, interaction: CommandInteraction
 
   try {
     const guildData = await getGuildData(guild.id);
-    const role = interaction.options.data[0].options?.at(0)?.role;
-    const mention = role ? (role.name === "@everyone" ? "@everyone" : roleMention(role.id)) : undefined;
+    const mode = interaction.options.data[0].options?.at(0)?.value as "all" | "join-only" | "join-leave" | undefined;
 
     await upsertGuildData({
       name: guild.name,
@@ -28,13 +25,13 @@ export const setMention = async (client: Client, interaction: CommandInteraction
       lang: guildData?.lang ?? locale2language(interaction.locale),
       webhookUrl: guildData?.webhookUrl,
       botDisabled: guildData?.botDisabled ?? false,
-      joinMention: mention,
-      noticeMode: guildData?.noticeMode,
+      joinMention: guildData?.joinMention,
+      noticeMode: mode,
       members: guildData?.members ?? [],
     });
 
     await interaction.reply({
-      embeds: [buildEmbed(setMentionEmbed(mention), interaction.locale)],
+      embeds: [buildEmbed(setNoticeEmbed(mode), interaction.locale)],
       ephemeral: false,
     });
   } catch (e) {

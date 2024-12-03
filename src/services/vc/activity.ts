@@ -43,7 +43,11 @@ export const voiceActivity = async (client: Client, oldVoiceState: VoiceState, n
     if (newVoiceState.member) await addJoinedAt(guildData, newVoiceState.member, unixtime);
   }
   // 退出
-  else if (oldVoiceState.channel?.permissionsFor(client.user)?.has("Connect") && !newVoiceState.channel) {
+  else if (
+    oldVoiceState.channel?.permissionsFor(client.user)?.has("Connect") &&
+    !newVoiceState.channel &&
+    guildData.noticeMode !== "join-only"
+  ) {
     await sendWebhook(
       client,
       oldVoiceState.guild,
@@ -60,7 +64,9 @@ export const voiceActivity = async (client: Client, oldVoiceState: VoiceState, n
   // 前後のチャンネルが同じ
   else if (
     oldVoiceState.channelId === newVoiceState.channelId &&
-    newVoiceState.channel?.permissionsFor(client.user)?.has("Connect")
+    newVoiceState.channel?.permissionsFor(client.user)?.has("Connect") &&
+    guildData.noticeMode !== "join-only" &&
+    guildData.noticeMode !== "join-leave"
   ) {
     // 配信ステータスが異なるとき
     if (oldVoiceState.streaming !== newVoiceState.streaming) {

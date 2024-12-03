@@ -26,6 +26,7 @@ export const toggleBotNotifications = async (client: Client, interaction: Comman
       webhookUrl: guildData?.webhookUrl,
       botDisabled: disabled,
       joinMention: guildData?.joinMention,
+      noticeMode: guildData?.noticeMode,
       members: guildData?.members ?? [],
     });
 

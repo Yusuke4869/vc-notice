@@ -3,6 +3,7 @@ import { setChannel } from "./channel";
 import { setHelp } from "./help";
 import { setLangage } from "./language";
 import { setMention } from "./mention";
+import { setNotice } from "./notice";
 import { dmErrorEmbed, noPermissionErrorEmbed } from "../../embed";
 import { buildEmbed } from "../../utils";
 
@@ -34,5 +35,6 @@ export const set = async (client: Client, interaction: CommandInteraction) => {
   else if (subCommand === "language") await setLangage(client, interaction);
   else if (subCommand === "bot") await toggleBotNotifications(client, interaction);
   else if (subCommand === "mention") await setMention(client, interaction);
+  else if (subCommand === "notice") await setNotice(client, interaction);
   else await setHelp(interaction);
 };
