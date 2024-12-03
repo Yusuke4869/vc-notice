@@ -13,7 +13,7 @@ importers:
         version: 14.16.3
       dotenv:
         specifier: ^16.0.1
-        version: 16.4.6
+        version: 16.4.7
       mongodb:
         specifier: ^6.0.0
         version: 6.11.0
@@ -573,8 +573,8 @@ packages:
     resolution: {integrity: sha512-35mSku4ZXK0vfCuHEDAwt55dg2jNajHZ1odvF+8SSr82EsZY4QmXfuWso8oEd8zRhVObSN18aM0CjSdoBX7zIw==}
     engines: {node: '>=0.10.0'}
 
-  dotenv@16.4.6:
-    resolution: {integrity: sha512-JhcR/+KIjkkjiU8yEpaB/USlzVi3i5whwOjpIRNGi9svKEXZSe+Qp6IWAjFjv+2GViAoDRCUv/QLNziQxsLqDg==}
+  dotenv@16.4.7:
+    resolution: {integrity: sha512-47qPchRCykZC03FhkYAhrvwU4xDBFIj1QPqaarj6mdM/hgUzfPHcpkHJOn3mJAufFeeAxAzeGsr5X0M4k6fLZQ==}
     engines: {node: '>=12'}
 
   enhanced-resolve@5.17.1:
@@ -1866,7 +1866,7 @@ snapshots:
     dependencies:
       esutils: 2.0.3
 
-  dotenv@16.4.6: {}
+  dotenv@16.4.7: {}
 
   enhanced-resolve@5.17.1:
     dependencies:
