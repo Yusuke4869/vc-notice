@@ -117,6 +117,46 @@ export const slashCommands: SlashCommandConfig[] = [
           },
         ],
       },
+      {
+        name: "notice",
+        description: {
+          en: "Set activity to notify",
+          ja: "通知するアクティビティを選択します",
+        },
+        stringOptions: [
+          {
+            name: "アクティビティ",
+            description: {
+              en: "Activity to notify",
+              ja: "通知するアクティビティ",
+            },
+            required: true,
+            choices: [
+              {
+                name: {
+                  en: "All",
+                  ja: "すべて",
+                },
+                value: "all",
+              },
+              {
+                name: {
+                  en: "Join only",
+                  ja: "入室のみ",
+                },
+                value: "join-only",
+              },
+              {
+                name: {
+                  en: "Join/Leave",
+                  ja: "入室・退室",
+                },
+                value: "join-leave",
+              },
+            ],
+          },
+        ],
+      },
     ],
   },
   {
