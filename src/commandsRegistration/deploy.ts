@@ -7,7 +7,7 @@ import { slashCommands } from "./commands";
 
 config();
 
-const client = new Client({ intents: new IntentsBitField() });
+const client = new Client({ intents: new IntentsBitField(), shards: "auto" });
 const TOKEN = process.env.DISCORD_TOKEN ?? "";
 const commands = buildCommands(slashCommands).map((command) => command.toJSON());
 
