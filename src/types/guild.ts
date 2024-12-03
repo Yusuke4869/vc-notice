@@ -15,5 +15,6 @@ export interface Guild {
   webhookUrl: string | undefined;
   botDisabled: boolean | undefined;
   joinMention: "@everyone" | `<@&${string}>` | undefined;
+  noticeMode: "all" | "join-only" | "join-leave" | undefined;
   members: Member[];
 }

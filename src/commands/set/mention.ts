@@ -29,6 +29,7 @@ export const setMention = async (client: Client, interaction: CommandInteraction
       webhookUrl: guildData?.webhookUrl,
       botDisabled: guildData?.botDisabled ?? false,
       joinMention: mention,
+      noticeMode: guildData?.noticeMode,
       members: guildData?.members ?? [],
     });
 
