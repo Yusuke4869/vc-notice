@@ -5,13 +5,13 @@
   "author": "Yusuke4869",
   "scripts": {
     "dev": "tsx watch src/main.ts",
-    "dev:commands": "tsx watch src/commandsRegistration/deploy.ts",
+    "dev:commands": "tsx src/commandsRegistration/deploy.ts",
     "build": "rm -rf dist/ && tsc",
     "start": "node dist/main.js",
     "start-vc-notice": "node dist/main.js",
     "deploy:commands": "node dist/commandsRegistration/deploy.js",
-    "lint": "eslint --fix src/** && prettier --write .",
-    "lint:check": "eslint src/**",
+    "lint": "eslint --fix src/** && tsc --noemit && prettier --write .",
+    "lint:check": "eslint src/** && tsc --noemit",
     "fmt": "prettier --write .",
     "fmt:check": "prettier --check ."
   },
