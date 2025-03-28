@@ -1,5 +1,5 @@
 import { checkChannel } from "./channel";
-import { dmErrorEmbed, noPermissionErrorEmbed } from "../../embed";
+import { dmErrorEmbed, noPermissionErrorEmbed } from "../../old-embed";
 import { buildEmbed } from "../../utils";
 
 import type { Client, CommandInteraction } from "discord.js";
@@ -24,6 +24,6 @@ export const check = async (client: Client, interaction: CommandInteraction) => 
     return;
   }
 
-  const subCommand = interaction.options.data[0].name;
-  if (subCommand === "channel") await checkChannel(client, interaction);
+  const subcommand = interaction.options.data[0].name;
+  if (subcommand === "channel") await checkChannel(client, interaction);
 };

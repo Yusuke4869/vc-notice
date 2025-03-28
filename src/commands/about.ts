@@ -1,4 +1,4 @@
-import { aboutEmbed } from "../embed";
+import { aboutEmbed } from "../old-embed";
 import { buildEmbed } from "../utils";
 
 import type { CommandInteraction } from "discord.js";

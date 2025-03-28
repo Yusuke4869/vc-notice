@@ -1,6 +1,6 @@
 import { Locale } from "discord.js";
 
-import { mentionHelpEmbed } from "../../embed";
+import { mentionHelpEmbed } from "../../old-embed";
 import { buildEmbed } from "../../utils";
 
 import type { Message } from "discord.js";

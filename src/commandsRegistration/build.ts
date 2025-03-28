@@ -1,9 +1,11 @@
-import { SlashCommandBuilder, ChannelType } from "discord.js";
+import { ChannelType, SlashCommandBuilder } from "discord.js";
 
 import type { SlashCommandConfig } from "./type";
-import type { SlashCommandSubcommandsOnlyBuilder } from "discord.js";
+import type { SlashCommandOptionsOnlyBuilder, SlashCommandSubcommandsOnlyBuilder } from "discord.js";
 
-export const buildCommands = (commands: SlashCommandConfig[]): SlashCommandSubcommandsOnlyBuilder[] =>
+export const buildCommands = (
+  commands: SlashCommandConfig[]
+): (SlashCommandSubcommandsOnlyBuilder | SlashCommandOptionsOnlyBuilder)[] =>
   commands.map((commandConfig) => {
     const command = new SlashCommandBuilder()
       .setName(commandConfig.name.toLowerCase())
@@ -13,9 +15,9 @@ export const buildCommands = (commands: SlashCommandConfig[]): SlashCommandSubco
       })
       .setDefaultMemberPermissions(commandConfig.permissions ?? null);
 
-    if (!commandConfig.subCommands) return command;
+    if (!commandConfig.subcommands) return command;
 
-    for (const subcommandConfig of commandConfig.subCommands) {
+    for (const subcommandConfig of commandConfig.subcommands) {
       command.addSubcommand((sc) => {
         sc.setName(subcommandConfig.name.toLowerCase())
           .setDescription(subcommandConfig.description.en)

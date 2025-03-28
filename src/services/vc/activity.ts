@@ -1,8 +1,8 @@
-import { addJoinedAt, addTotalTime } from "./time";
-import { vcEmbed } from "../../embed/vc";
+import { vcEmbed } from "../../old-embed/vc";
 import { getGuildData } from "../../repositories/guild";
 import { buildEmbed } from "../../utils";
 import { sendWebhook } from "../webhook";
+import { addJoinedAt, addTotalTime } from "./time";
 
 import type { Client, VoiceState } from "discord.js";
 

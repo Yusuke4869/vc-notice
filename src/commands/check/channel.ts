@@ -1,6 +1,6 @@
-import { roleMention, PermissionFlagsBits } from "discord.js";
+import { PermissionFlagsBits, roleMention } from "discord.js";
 
-import { setNotFoundInteractionChannelErrorEmbed, checkChannelPermissionsEmbed } from "../../embed";
+import { checkChannelPermissionsEmbed, setNotFoundInteractionChannelErrorEmbed } from "../../old-embed";
 import { buildEmbed } from "../../utils";
 
 import type { Client, CommandInteraction, VoiceBasedChannel } from "discord.js";

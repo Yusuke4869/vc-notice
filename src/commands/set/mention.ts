@@ -1,6 +1,6 @@
 import { roleMention } from "discord.js";
 
-import { setNotFoundInteractionChannelErrorEmbed, setMentionEmbed } from "../../embed";
+import { setMentionEmbed, setNotFoundInteractionChannelErrorEmbed } from "../../old-embed";
 import { getGuildData, upsertGuildData } from "../../repositories/guild";
 import { buildEmbed, locale2language } from "../../utils";
 

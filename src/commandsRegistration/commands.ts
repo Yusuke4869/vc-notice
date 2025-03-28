@@ -35,7 +35,7 @@ export const slashCommands: SlashCommandConfig[] = [
     },
     allowDM: false,
     permissions: PermissionFlagsBits.ManageGuild,
-    subCommands: [
+    subcommands: [
       {
         name: "help",
         description: {
@@ -167,7 +167,7 @@ export const slashCommands: SlashCommandConfig[] = [
     },
     allowDM: false,
     permissions: PermissionFlagsBits.ManageGuild,
-    subCommands: [
+    subcommands: [
       {
         name: "channel",
         description: {

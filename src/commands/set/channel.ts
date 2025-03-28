@@ -1,10 +1,10 @@
 import { ChannelType } from "discord.js";
 
 import {
+  noManageWebhooksPermissionErrorEmbed,
   setCompletedEmbed,
   setNotFoundInteractionChannelErrorEmbed,
-  noManageWebhooksPermissionErrorEmbed,
-} from "../../embed";
+} from "../../old-embed";
 import { getGuildData, upsertGuildData } from "../../repositories/guild";
 import { updateWebhook } from "../../services";
 import { buildEmbed, locale2language } from "../../utils";

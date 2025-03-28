@@ -34,5 +34,5 @@ export interface SlashCommandConfig {
   description: Record<TLanguage, string>;
   allowDM: boolean;
   permissions?: bigint | null;
-  subCommands?: SlashCommandSubcommandConfig[];
+  subcommands?: SlashCommandSubcommandConfig[];
 }

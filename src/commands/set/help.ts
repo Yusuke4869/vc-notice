@@ -1,4 +1,4 @@
-import { setHelpEmbed } from "../../embed";
+import { setHelpEmbed } from "../../old-embed";
 import { buildEmbed } from "../../utils";
 
 import type { CommandInteraction } from "discord.js";

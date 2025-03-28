@@ -1,4 +1,4 @@
-import { setNotFoundInteractionChannelErrorEmbed, toggleBotNotificationsEmbed } from "../../embed";
+import { setNotFoundInteractionChannelErrorEmbed, toggleBotNotificationsEmbed } from "../../old-embed";
 import { getGuildData, upsertGuildData } from "../../repositories/guild";
 import { buildEmbed, locale2language } from "../../utils";
 

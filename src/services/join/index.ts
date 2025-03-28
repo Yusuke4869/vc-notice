@@ -1,4 +1,4 @@
-import { joinEmbed } from "../../embed/join";
+import { joinEmbed } from "../../old-embed/join";
 import { buildEmbed } from "../../utils";
 
 import type { Guild } from "discord.js";

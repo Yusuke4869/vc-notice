@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-misused-promises */
-import { Client, IntentsBitField, Routes, REST } from "discord.js";
+import { Client, IntentsBitField, Routes, REST, SlashCommandBuilder } from "discord.js";
 import { config } from "dotenv";
 
 import { buildCommands } from "./build";
@@ -9,7 +9,36 @@ config();
 
 const client = new Client({ intents: new IntentsBitField(), shards: "auto" });
 const TOKEN = process.env.DISCORD_TOKEN ?? "";
-const commands = buildCommands(slashCommands).map((command) => command.toJSON());
+const commands = [
+  ...buildCommands(slashCommands).map((command) => command.toJSON()),
+  new SlashCommandBuilder()
+    .setName("subcommand")
+    .setDescription("サブコマンド")
+    .addSubcommandGroup((subcommandGroup) =>
+      subcommandGroup
+        .setName("group1")
+        .setDescription("グループ1")
+        .addSubcommand((subcommand) =>
+          subcommand
+            .setName("subcommand1")
+            .setDescription("サブコマンド1")
+            .addStringOption((opt) => opt.setName("option11").setDescription("オプション11").setRequired(true))
+        )
+    )
+    .addSubcommand((subcommand) =>
+      subcommand
+        .setName("subcommand1")
+        .setDescription("サブコマンド1")
+        .addStringOption((opt) => opt.setName("option11").setDescription("オプション11").setRequired(true))
+    )
+    .addSubcommand((subcommand) =>
+      subcommand
+        .setName("subcommand2")
+        .setDescription("サブコマンド2")
+        .addBooleanOption((opt) => opt.setName("option22").setDescription("オプション22").setRequired(true))
+    )
+    .toJSON(),
+];
 
 client.once("ready", async () => {
   const clientUser = client.user;

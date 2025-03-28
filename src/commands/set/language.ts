@@ -1,10 +1,10 @@
 import { ChannelType } from "discord.js";
 
 import {
+  noManageWebhooksPermissionErrorEmbed,
   setCompletedEmbed,
   setNotFoundInteractionChannelErrorEmbed,
-  noManageWebhooksPermissionErrorEmbed,
-} from "../../embed";
+} from "../../old-embed";
 import { getGuildData, upsertGuildData } from "../../repositories/guild";
 import { getWebhookChannel, updateWebhook } from "../../services";
 import { buildEmbed, locale2language } from "../../utils";
@@ -25,7 +25,7 @@ export const setLangage = async (client: Client, interaction: CommandInteraction
     return;
   }
 
-  if (client.user && !channel.permissionsFor(client.user)?.has("ManageWebhooks")) {
+  if (client.user && !channel.permissionsFor(client.user)?.has(["ManageWebhooks"])) {
     await interaction.reply({
       embeds: [buildEmbed(noManageWebhooksPermissionErrorEmbed(), interaction.locale)],
       ephemeral: false,

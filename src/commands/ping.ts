@@ -1,4 +1,4 @@
-import { pingEmbed } from "../embed";
+import { pingEmbed } from "../old-embed";
 import { buildEmbed } from "../utils";
 
 import type { Client, CommandInteraction } from "discord.js";
