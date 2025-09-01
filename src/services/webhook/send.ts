@@ -29,6 +29,7 @@ export const sendWebhook = async (
       content,
       embeds: [embed],
     });
+    webhook.destroy();
   } catch (e) {
     console.error(e);
   }

@@ -28,6 +28,7 @@ export const updateWebhook = async (client: Client, channel: TextChannel, prevUr
     try {
       const webhook = new WebhookClient({ url: prevUrl });
       await webhook.delete();
+      webhook.destroy();
 
       // 手動で削除された場合に発生するエラーのため無視 (404: Unknown Webhook)
       // eslint-disable-next-line no-empty
