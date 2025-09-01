@@ -25,13 +25,17 @@ const createWebhook = async (client: Client, channel: TextChannel): Promise<stri
 export const updateWebhook = async (client: Client, channel: TextChannel, prevUrl?: string): Promise<string | null> => {
   // webhook.edit() ではチャンネル変更ができなかったため、一回削除して再度作成
   if (prevUrl) {
+    const webhook = new WebhookClient({ url: prevUrl });
+
     try {
-      const webhook = new WebhookClient({ url: prevUrl });
       await webhook.delete();
 
       // 手動で削除された場合に発生するエラーのため無視 (404: Unknown Webhook)
       // eslint-disable-next-line no-empty
-    } catch {}
+    } catch {
+    } finally {
+      webhook.destroy();
+    }
   }
 
   const res = await createWebhook(client, channel);

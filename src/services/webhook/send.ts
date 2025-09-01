@@ -21,8 +21,9 @@ export const sendWebhook = async (
     console.error(e);
   }
 
+  const webhook = new WebhookClient({ url });
+
   try {
-    const webhook = new WebhookClient({ url });
     await webhook.send({
       username: client.user?.username ?? "VC Notice",
       avatarURL: client.user?.avatarURL() ?? undefined,
@@ -31,5 +32,7 @@ export const sendWebhook = async (
     });
   } catch (e) {
     console.error(e);
+  } finally {
+    webhook.destroy();
   }
 };
