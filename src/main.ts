@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-misused-promises */
-import { ActivityType, Client, Events, GatewayIntentBits } from "discord.js";
+import { ActivityType, Client, Events, GatewayIntentBits, Options } from "discord.js";
 import { config } from "dotenv";
 
 import { deleteGuildData } from "./repositories/guild";
@@ -9,7 +9,19 @@ config();
 
 const intents = [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages, GatewayIntentBits.GuildVoiceStates];
 
-const client = new Client({ intents, shards: "auto" });
+const client = new Client({
+  intents,
+  shards: "auto",
+  sweepers: {
+    ...Options.DefaultSweeperSettings,
+
+    // 60秒ごとに、VCに接続していない VoiceState キャッシュを削除
+    voiceStates: {
+      interval: 60,
+      filter: () => (state) => state.channelId === null,
+    },
+  },
+});
 const TOKEN = process.env.DISCORD_TOKEN;
 
 console.info(`
