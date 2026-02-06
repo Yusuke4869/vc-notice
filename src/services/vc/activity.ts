@@ -27,7 +27,11 @@ export const voiceActivity = async (client: Client, oldVoiceState: VoiceState, n
   const passedTime = joinedAt ? unixtime - joinedAt : 0;
 
   // 参加
-  if (!oldVoiceState.channel && newVoiceState.channel?.permissionsFor(client.user)?.has("Connect")) {
+  if (
+    !oldVoiceState.channel &&
+    newVoiceState.channel?.permissionsFor(client.user)?.has("Connect") &&
+    guildData.noticeMode !== "stream-video"
+  ) {
     await sendWebhook(
       client,
       newVoiceState.guild,
@@ -46,7 +50,8 @@ export const voiceActivity = async (client: Client, oldVoiceState: VoiceState, n
   else if (
     oldVoiceState.channel?.permissionsFor(client.user)?.has("Connect") &&
     !newVoiceState.channel &&
-    guildData.noticeMode !== "join-only"
+    guildData.noticeMode !== "join-only" &&
+    guildData.noticeMode !== "stream-video"
   ) {
     await sendWebhook(
       client,
@@ -128,7 +133,8 @@ export const voiceActivity = async (client: Client, oldVoiceState: VoiceState, n
   // 前後のチャンネルが異なるとき
   else if (
     oldVoiceState.channelId !== newVoiceState.channelId &&
-    newVoiceState.channel?.permissionsFor(client.user)?.has("Connect")
+    newVoiceState.channel?.permissionsFor(client.user)?.has("Connect") &&
+    guildData.noticeMode !== "stream-video"
   ) {
     // AFKチャンネル参加
     if (newVoiceState.channelId === newVoiceState.guild.afkChannelId) {
