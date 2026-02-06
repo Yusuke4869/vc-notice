@@ -153,6 +153,13 @@ export const slashCommands: SlashCommandConfig[] = [
                 },
                 value: "join-leave",
               },
+              {
+                name: {
+                  en: "Steaming/Video only",
+                  ja: "配信・ビデオのみ",
+                },
+                value: "stream-video",
+              },
             ],
           },
         ],

@@ -1,6 +1,8 @@
 import type { EmbedContents } from "../../../types";
 
-export const setNoticeEmbed = (mode: "all" | "join-only" | "join-leave" | undefined): EmbedContents => {
+export const setNoticeEmbed = (
+  mode: "all" | "join-only" | "join-leave" | "stream-video" | undefined
+): EmbedContents => {
   const { en, ja } = (() => {
     switch (mode) {
       case "join-only":
@@ -12,6 +14,11 @@ export const setNoticeEmbed = (mode: "all" | "join-only" | "join-leave" | undefi
         return {
           en: "Join/Leave",
           ja: "入室・退室",
+        };
+      case "stream-video":
+        return {
+          en: "Streaming/Video only",
+          ja: "配信・ビデオのみ",
         };
       default:
         return {
