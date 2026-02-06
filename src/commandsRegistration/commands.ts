@@ -155,7 +155,7 @@ export const slashCommands: SlashCommandConfig[] = [
               },
               {
                 name: {
-                  en: "Steaming/Video only",
+                  en: "Streaming/Video only",
                   ja: "配信・ビデオのみ",
                 },
                 value: "stream-video",
