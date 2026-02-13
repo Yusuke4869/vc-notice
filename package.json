@@ -17,7 +17,7 @@
   },
   "packageManager": "pnpm@10.29.3+sha512.498e1fb4cca5aa06c1dcf2611e6fafc50972ffe7189998c409e90de74566444298ffe43e6cd2acdc775ba1aa7cc5e092a8b7054c811ba8c5770f84693d33d2dc",
   "volta": {
-    "node": "24.13.0"
+    "node": "24.13.1"
   },
   "dependencies": {
     "discord.js": "^14.0.0",
@@ -28,7 +28,7 @@
     "@eslint/js": "^9.11.0",
     "@types/eslint-config-prettier": "^6.11.3",
     "@types/eslint__js": "^8.42.3",
-    "@types/node": "^22.0.0",
+    "@types/node": "^24.0.0",
     "@typescript-eslint/eslint-plugin": "^8.0.0",
     "@typescript-eslint/parser": "^8.0.0",
     "eslint": "^9.11.0",
