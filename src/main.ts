@@ -21,6 +21,13 @@ const client = new Client({
       filter: () => (state) => state.channelId === null,
     },
   },
+  makeCache: Options.cacheWithLimits({
+    ...Options.DefaultMakeCacheSettings,
+
+    GuildEmojiManager: 0,
+    GuildStickerManager: 0,
+    GuildScheduledEventManager: 0,
+  }),
 });
 const TOKEN = process.env.DISCORD_TOKEN;
 
