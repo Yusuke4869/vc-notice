@@ -1,9 +1,9 @@
 import { aboutEmbed } from "../embed";
 import { buildEmbed } from "../utils";
 
-import type { CommandInteraction } from "discord.js";
+import type { ChatInputCommandInteraction } from "discord.js";
 
-export const about = async (interaction: CommandInteraction) => {
+export const about = async (interaction: ChatInputCommandInteraction) => {
   try {
     await interaction.reply({
       embeds: [buildEmbed(aboutEmbed(), interaction.locale)],

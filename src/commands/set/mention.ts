@@ -4,9 +4,9 @@ import { setNotFoundInteractionChannelErrorEmbed, setMentionEmbed } from "../../
 import { getGuildData, upsertGuildData } from "../../repositories/guild";
 import { buildEmbed, locale2language } from "../../utils";
 
-import type { Client, CommandInteraction } from "discord.js";
+import type { Client, ChatInputCommandInteraction } from "discord.js";
 
-export const setMention = async (client: Client, interaction: CommandInteraction) => {
+export const setMention = async (client: Client, interaction: ChatInputCommandInteraction) => {
   const guild = interaction.guild;
   if (!guild) {
     await interaction.reply({

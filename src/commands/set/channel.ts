@@ -9,9 +9,9 @@ import { getGuildData, upsertGuildData } from "../../repositories/guild";
 import { updateWebhook } from "../../services";
 import { buildEmbed, locale2language } from "../../utils";
 
-import type { Client, CommandInteraction } from "discord.js";
+import type { Client, ChatInputCommandInteraction } from "discord.js";
 
-export const setChannel = async (client: Client, interaction: CommandInteraction) => {
+export const setChannel = async (client: Client, interaction: ChatInputCommandInteraction) => {
   const guild = interaction.guild;
   const channel = interaction.channel;
 

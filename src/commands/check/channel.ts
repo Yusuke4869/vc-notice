@@ -3,9 +3,9 @@ import { roleMention, PermissionFlagsBits } from "discord.js";
 import { setNotFoundInteractionChannelErrorEmbed, checkChannelPermissionsEmbed } from "../../embed";
 import { buildEmbed } from "../../utils";
 
-import type { Client, CommandInteraction, VoiceBasedChannel } from "discord.js";
+import type { Client, ChatInputCommandInteraction, VoiceBasedChannel } from "discord.js";
 
-export const checkChannel = async (client: Client, interaction: CommandInteraction) => {
+export const checkChannel = async (client: Client, interaction: ChatInputCommandInteraction) => {
   const guild = interaction.guild;
   const botUser = client.user;
   if (!guild || !botUser) {

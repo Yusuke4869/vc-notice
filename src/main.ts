@@ -73,7 +73,7 @@ client.on(Events.MessageCreate, async (message) => {
 
 // スラッシュコマンド
 client.on(Events.InteractionCreate, async (interaction) => {
-  if (!interaction.isCommand()) return;
+  if (!interaction.isChatInputCommand()) return;
 
   await commandInteraction(client, interaction);
 });
