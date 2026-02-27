@@ -9,15 +9,15 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v6
 
-      - name: Set up Node.js environment
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+
+      - name: Setup Node.js Environment
         uses: actions/setup-node@v6
         with:
           node-version-file: .nvmrc
 
-      - name: Set up pnpm
-        run: corepack enable pnpm
-
-      - name: Install dependencies
+      - name: Install Dependencies
         run: pnpm install --frozen-lockfile
 
       - name: Check build
