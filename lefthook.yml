@@ -3,8 +3,8 @@ pre-commit:
   commands:
     lint:
       glob: "*.ts"
-      run: pnpm lint
+      run: pnpm eslint --fix {staged_files}
       stage_fixed: true
     format:
-      run: pnpm fmt
+      run: pnpm prettier --write --ignore-unknown {staged_files}
       stage_fixed: true
