@@ -1,8 +1,8 @@
 import { about, help, ping, set, check } from "../../commands";
 
-import type { Client, CommandInteraction } from "discord.js";
+import type { Client, ChatInputCommandInteraction } from "discord.js";
 
-export const commandInteraction = async (client: Client, interaction: CommandInteraction) => {
+export const commandInteraction = async (client: Client, interaction: ChatInputCommandInteraction) => {
   const { commandName } = interaction;
 
   if (commandName === "help") await help(interaction);

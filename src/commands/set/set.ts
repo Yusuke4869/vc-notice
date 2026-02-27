@@ -7,9 +7,9 @@ import { setNotice } from "./notice";
 import { dmErrorEmbed, noPermissionErrorEmbed } from "../../embed";
 import { buildEmbed } from "../../utils";
 
-import type { Client, CommandInteraction } from "discord.js";
+import type { Client, ChatInputCommandInteraction } from "discord.js";
 
-export const set = async (client: Client, interaction: CommandInteraction) => {
+export const set = async (client: Client, interaction: ChatInputCommandInteraction) => {
   // DMで送信された場合
   if (!interaction.guild) {
     await interaction.reply({

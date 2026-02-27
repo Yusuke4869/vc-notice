@@ -1,9 +1,9 @@
 import { helpEmbed } from "../embed";
 import { buildEmbed } from "../utils";
 
-import type { CommandInteraction } from "discord.js";
+import type { ChatInputCommandInteraction } from "discord.js";
 
-export const help = async (interaction: CommandInteraction) => {
+export const help = async (interaction: ChatInputCommandInteraction) => {
   try {
     await interaction.reply({
       embeds: [buildEmbed(helpEmbed(interaction.memberPermissions?.has("ManageGuild") ?? false), interaction.locale)],

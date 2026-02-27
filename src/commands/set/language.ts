@@ -10,9 +10,9 @@ import { getWebhookChannel, updateWebhook } from "../../services";
 import { buildEmbed, locale2language } from "../../utils";
 
 import type { TLanguage } from "../../types";
-import type { Client, CommandInteraction } from "discord.js";
+import type { Client, ChatInputCommandInteraction } from "discord.js";
 
-export const setLangage = async (client: Client, interaction: CommandInteraction) => {
+export const setLangage = async (client: Client, interaction: ChatInputCommandInteraction) => {
   const guild = interaction.guild;
   const channel = interaction.channel;
 

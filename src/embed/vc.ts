@@ -109,7 +109,7 @@ export const vcEmbed = (
       fields: [
         {
           name: member?.displayName ?? "member",
-          value: `${text.en.description[activityType]}\n\n${time(new Date(), TimestampStyles.LongDateTime)}`,
+          value: `${text.en.description[activityType]}\n\n${time(new Date(), TimestampStyles.FullDateShortTime)}`,
         },
       ],
     },
@@ -121,7 +121,7 @@ export const vcEmbed = (
       fields: [
         {
           name: member?.displayName ?? "member",
-          value: `${text.ja.description[activityType]}\n\n${time(new Date(), TimestampStyles.LongDateTime)}`,
+          value: `${text.ja.description[activityType]}\n\n${time(new Date(), TimestampStyles.FullDateShortTime)}`,
         },
       ],
     },
