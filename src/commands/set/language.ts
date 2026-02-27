@@ -16,7 +16,7 @@ export const setLangage = async (client: Client, interaction: ChatInputCommandIn
   const guild = interaction.guild;
   const channel = interaction.channel;
 
-  if (!guild || !channel || channel.type !== ChannelType.GuildText) {
+  if (!guild || channel?.type !== ChannelType.GuildText) {
     await interaction.reply({
       embeds: [buildEmbed(setNotFoundInteractionChannelErrorEmbed(), interaction.locale)],
       ephemeral: false,
