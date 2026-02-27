@@ -1,47 +1,29 @@
 import eslint from "@eslint/js";
-import tsPlugin from "@typescript-eslint/eslint-plugin";
-import tseslintParser from "@typescript-eslint/parser";
-import prettier from "eslint-config-prettier";
-import importPlugin from "eslint-plugin-import";
-import globals from "globals";
 import tseslint from "typescript-eslint";
+import pluginImport from "eslint-plugin-import";
+import prettier from "eslint-config-prettier";
 
-const config = tseslint.config(
+/** @type {import("eslint").Linter.Config[]} */
+export default [
   {
-    ignores: ["node_modules", "dist"],
-  },
-  {
-    files: ["**/*.js", "**/*.ts"],
-    languageOptions: {
-      globals: { ...globals.node },
-      ecmaVersion: "latest",
-      parserOptions: {
-        projectService: true,
-        tsconfigRootDir: import.meta.dirname,
-      },
-      parser: tseslintParser,
-    },
-    settings: {
-      "import/resolver": {
-        typescript: true,
-        node: true,
-      },
-      "import/parsers": {
-        "@typescript-eslint/parser": [".js", ".ts"],
-      },
-    },
-    plugins: {
-      "@typescript-eslint": tsPlugin,
-    },
+    ignores: ["node_modules", "dist", "eslint.config.mjs"],
   },
   eslint.configs.recommended,
   ...tseslint.configs.strictTypeChecked,
   ...tseslint.configs.stylisticTypeChecked,
-  importPlugin.flatConfigs.recommended,
-  importPlugin.flatConfigs.typescript,
-  prettier,
   {
+    languageOptions: {
+      parserOptions: {
+        projectService: true,
+        tsconfigRootDir: import.meta.dirname,
+      },
+    },
+  },
+  {
+    plugins: pluginImport.flatConfigs.recommended.plugins,
     rules: {
+      ...pluginImport.flatConfigs.recommended.rules,
+      ...pluginImport.flatConfigs.typescript.rules,
       "import/consistent-type-specifier-style": "error",
       "import/newline-after-import": "error",
       "import/no-duplicates": "error",
@@ -57,7 +39,12 @@ const config = tseslint.config(
         },
       ],
     },
-  }
-);
-
-export default config;
+    settings: {
+      "import/resolver": {
+        typescript: true,
+        node: true,
+      },
+    },
+  },
+  prettier,
+];
