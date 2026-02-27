@@ -10,8 +10,8 @@
     "start": "node dist/main.js",
     "start-vc-notice": "node dist/main.js",
     "deploy:commands": "node dist/commandsRegistration/deploy.js",
-    "lint": "eslint --fix src/** && tsc --noemit && prettier --write .",
-    "lint:check": "eslint src/** && tsc --noemit",
+    "lint": "tsc --noEmit && eslint --fix && prettier --write .",
+    "lint:check": "tsc --noEmit && eslint",
     "fmt": "prettier --write .",
     "fmt:check": "prettier --check ."
   },
