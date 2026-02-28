@@ -1,11 +1,8 @@
 /* eslint-disable @typescript-eslint/no-misused-promises */
 import { Client, IntentsBitField, Routes, REST } from "discord.js";
-import { config } from "dotenv";
 
 import { buildCommands } from "./build";
 import { slashCommands } from "./commands";
-
-config();
 
 const client = new Client({ intents: new IntentsBitField(), shards: "auto" });
 const TOKEN = process.env.DISCORD_TOKEN ?? "";
