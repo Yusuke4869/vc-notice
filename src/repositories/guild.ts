@@ -1,12 +1,9 @@
-import { config } from "dotenv";
-
 import { connectToMongodb } from "./mongodb";
 
 import type { Guild } from "../types/guild";
 import type { Snowflake } from "discord.js";
 import type { Collection } from "mongodb";
 
-config();
 const COLLECTION_NAME = process.env.DB_COLLECTION_NAME ?? "vc-notice";
 
 let collection: Collection<Guild> | undefined;

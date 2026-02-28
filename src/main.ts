@@ -1,11 +1,8 @@
 /* eslint-disable @typescript-eslint/no-misused-promises */
 import { ActivityType, Client, Events, GatewayIntentBits, Options } from "discord.js";
-import { config } from "dotenv";
 
 import { deleteGuildData } from "./repositories/guild";
 import { commandInteraction, join, mention, voiceActivity } from "./services";
-
-config();
 
 const intents = [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages, GatewayIntentBits.GuildVoiceStates];
 
