@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-misused-promises */
 import { ActivityType, Client, Events, GatewayIntentBits, Options } from "discord.js";
 
+import { handleCommandError } from "./commands";
 import { deleteGuildData } from "./repositories/guild";
 import { commandInteraction, join, mention, voiceActivity } from "./services";
 
@@ -72,10 +73,18 @@ client.on(Events.MessageCreate, async (message) => {
 client.on(Events.InteractionCreate, async (interaction) => {
   if (!interaction.isChatInputCommand()) return;
 
-  await commandInteraction(client, interaction);
+  try {
+    await commandInteraction(client, interaction);
+  } catch (e) {
+    await handleCommandError(interaction, e);
+  }
 });
 
 // 通話イベント
 client.on(Events.VoiceStateUpdate, async (oldVoiceState, newVoiceState) => {
   await voiceActivity(client, oldVoiceState, newVoiceState);
+});
+
+client.on(Events.Error, (error) => {
+  console.error(error);
 });

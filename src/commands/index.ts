@@ -3,3 +3,4 @@ export * from "./help";
 export * from "./ping";
 export * from "./set";
 export * from "./check";
+export * from "./error";
