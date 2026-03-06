@@ -57,3 +57,16 @@ export const deleteGuildData = async (guildId: Snowflake): Promise<boolean> => {
     return false;
   }
 };
+
+export const unsetWebhookUrlByGuildId = async (guildId: Snowflake): Promise<number> => {
+  try {
+    const collection = await getMongodbCollection();
+    if (!collection) return 0;
+
+    const r = await collection.updateOne({ id: guildId }, { $unset: { webhookUrl: "" } });
+    return r.modifiedCount;
+  } catch (e) {
+    console.error(e);
+    return 0;
+  }
+};
