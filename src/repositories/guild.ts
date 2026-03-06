@@ -1,6 +1,6 @@
 import { connectToMongodb } from "./mongodb";
 
-import type { Guild } from "../types/guild";
+import type { Guild, Member } from "../types/guild";
 import type { Snowflake } from "discord.js";
 import type { Collection } from "mongodb";
 
@@ -68,5 +68,23 @@ export const unsetWebhookUrlByGuildId = async (guildId: Snowflake): Promise<numb
   } catch (e) {
     console.error(e);
     return 0;
+  }
+};
+
+export const updateGuildMembers = async (
+  guildId: Snowflake,
+  guildName: string,
+  members: Member[]
+): Promise<boolean> => {
+  try {
+    const collection = await getMongodbCollection();
+    if (!collection) return false;
+
+    // VoiceState 由来の更新では webhookUrl など設定項目を上書きしない
+    const r = await collection.updateOne({ id: guildId }, { $set: { name: guildName, members } });
+    return r.acknowledged;
+  } catch (e) {
+    console.error(e);
+    return false;
   }
 };
