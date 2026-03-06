@@ -1,4 +1,4 @@
-import { upsertGuildData } from "../../repositories/guild";
+import { updateGuildMembers } from "../../repositories/guild";
 
 import type { Guild, Member } from "../../types";
 import type { GuildMember } from "discord.js";
@@ -14,16 +14,7 @@ export const addJoinedAt = async (guildData: Guild, member: GuildMember, joinedA
       totalTime: memberData?.totalTime ?? 0,
     };
 
-    const res = await upsertGuildData({
-      name: member.guild.name,
-      id: member.guild.id,
-      lang: guildData.lang,
-      webhookUrl: guildData.webhookUrl,
-      botDisabled: guildData.botDisabled ?? false,
-      joinMention: guildData.joinMention,
-      noticeMode: guildData.noticeMode,
-      members: [...otherMembersData, newMemberData],
-    });
+    const res = await updateGuildMembers(member.guild.id, member.guild.name, [...otherMembersData, newMemberData]);
     return res;
   } catch (e) {
     console.error(e);
@@ -42,16 +33,7 @@ export const addTotalTime = async (guildData: Guild, member: GuildMember, passed
       totalTime: (memberData?.totalTime ?? 0) + passedTime,
     };
 
-    const res = await upsertGuildData({
-      name: member.guild.name,
-      id: member.guild.id,
-      lang: guildData.lang,
-      webhookUrl: guildData.webhookUrl,
-      botDisabled: guildData.botDisabled ?? false,
-      joinMention: guildData.joinMention,
-      noticeMode: guildData.noticeMode,
-      members: [...otherMembersData, newMemberData],
-    });
+    const res = await updateGuildMembers(member.guild.id, member.guild.name, [...otherMembersData, newMemberData]);
     return res;
   } catch (e) {
     console.error(e);
