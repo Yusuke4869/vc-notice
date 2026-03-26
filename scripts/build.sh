@@ -1,4 +1,6 @@
-PATH=$PATH:$HOME/.volta/bin
+#!/bin/bash
+
+corepack enable
 
 git checkout .
 git pull origin main
