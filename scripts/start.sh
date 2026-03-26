@@ -1,4 +1,4 @@
-PATH=$PATH:$HOME/.volta/bin
+corepack enable
 
 if [ ! -d ./dist ]; then
   git checkout .
