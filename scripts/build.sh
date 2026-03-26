@@ -1,3 +1,5 @@
+#!/bin/bash
+
 corepack enable
 
 git checkout .
