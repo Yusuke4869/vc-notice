@@ -1,9 +1,9 @@
 import { WebhookClient } from "discord.js";
 
-import type { Client, TextChannel } from "discord.js";
+import type { BaseGuildTextChannel, Client } from "discord.js";
 
 // export はせずに updateWebhook() から呼び出すように
-const createWebhook = async (client: Client, channel: TextChannel): Promise<string | null> => {
+const createWebhook = async (client: Client, channel: BaseGuildTextChannel): Promise<string | null> => {
   try {
     const webhook = await channel.createWebhook({
       name: client.user?.username ?? "VC Notice",
@@ -22,7 +22,11 @@ const createWebhook = async (client: Client, channel: TextChannel): Promise<stri
  * @param channel Webhook を送信するチャンネル
  * @param prevUrl 更新前の Webhook URL
  */
-export const updateWebhook = async (client: Client, channel: TextChannel, prevUrl?: string): Promise<string | null> => {
+export const updateWebhook = async (
+  client: Client,
+  channel: BaseGuildTextChannel,
+  prevUrl?: string
+): Promise<string | null> => {
   // webhook.edit() ではチャンネル変更ができなかったため、一回削除して再度作成
   if (prevUrl) {
     const webhook = new WebhookClient({ url: prevUrl });
