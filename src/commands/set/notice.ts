@@ -18,11 +18,7 @@ export const setNotice = async (client: Client, interaction: ChatInputCommandInt
   try {
     const guildData = await getGuildData(guild.id);
     const mode = interaction.options.data[0].options?.at(0)?.value as
-      | "all"
-      | "join-only"
-      | "join-leave"
-      | "stream-video"
-      | undefined;
+      "all" | "join-only" | "join-leave" | "stream-video" | undefined;
 
     await upsertGuildData({
       name: guild.name,

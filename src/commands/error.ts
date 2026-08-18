@@ -4,7 +4,7 @@ const UNKNOWN_INTERACTION_ERROR_CODE = 10062;
 
 const extractErrorCode = (error: unknown): number | undefined => {
   if (typeof error !== "object" || !error || !("code" in error)) return undefined;
-  const { code } = error as { code: unknown };
+  const { code } = error;
   return typeof code === "number" ? code : undefined;
 };
 
