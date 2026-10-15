@@ -1,9 +1,19 @@
-import { TimestampStyles, channelMention, time, userMention } from "discord.js";
+import {
+  ContainerBuilder,
+  SectionBuilder,
+  TextDisplayBuilder,
+  ThumbnailBuilder,
+  TimestampStyles,
+  channelMention,
+  resolveColor,
+  time,
+  userMention,
+} from "discord.js";
 
 import { calcTime } from "../utils";
 
-import type { EmbedContents, NoticeEmbedText, TLanguage, voiceChannelActivityType } from "../types";
-import type { EmbedFooterOptions, GuildMember, VoiceBasedChannel } from "discord.js";
+import type { NoticeEmbedText, TLanguage, voiceChannelActivityType } from "../types";
+import type { GuildMember, VoiceBasedChannel } from "discord.js";
 
 const noticeText = (channel: VoiceBasedChannel): NoticeEmbedText => ({
   en: {
@@ -72,67 +82,35 @@ const noticeText = (channel: VoiceBasedChannel): NoticeEmbedText => ({
   },
 });
 
-const generateFooter = (
-  text: NoticeEmbedText,
-  activityType: voiceChannelActivityType,
-  passedTime?: number
-): Record<TLanguage, EmbedFooterOptions> | null => {
-  if (!passedTime) return null;
-  if (activityType !== "left" && activityType !== "joinedAFK") return null;
-
-  const t = calcTime(passedTime);
-  return {
-    en: {
-      text: `${text.en.footer.callTime} ${t}`,
-    },
-    ja: {
-      text: `${text.ja.footer.callTime} ${t}`,
-    },
-  };
-};
-
-export const vcEmbed = (
+export const vcComponents = (
   member: GuildMember | null,
   channel: VoiceBasedChannel,
   activityType: voiceChannelActivityType,
+  language: TLanguage,
   passedTime?: number
-): EmbedContents => {
-  const memberMention = member ? userMention(member.id) : "member";
-  const text = noticeText(channel);
-  const footerText = generateFooter(text, activityType, passedTime);
+): ContainerBuilder => {
+  const text = noticeText(channel)[language];
+  const heading = new TextDisplayBuilder().setContent(`### ${text.title[activityType]}`);
+  const container = new ContainerBuilder().setAccentColor(resolveColor(text.color[activityType]));
+  const body = new TextDisplayBuilder().setContent(
+    `${text.description[activityType]}\n\n${time(new Date(), TimestampStyles.FullDateShortTime)}`
+  );
 
-  return {
-    en: {
-      title: text.en.title[activityType],
-      color: text.en.color[activityType],
-      thumbnail: member?.displayAvatarURL() ?? null,
-      footer: footerText?.en,
-      fields: [
-        {
-          name: "",
-          value: memberMention,
-        },
-        {
-          name: "",
-          value: `${text.en.description[activityType]}\n\n${time(new Date(), TimestampStyles.FullDateShortTime)}`,
-        },
-      ],
-    },
-    ja: {
-      title: text.ja.title[activityType],
-      color: text.ja.color[activityType],
-      thumbnail: member?.displayAvatarURL() ?? null,
-      footer: footerText?.ja,
-      fields: [
-        {
-          name: "",
-          value: memberMention,
-        },
-        {
-          name: "",
-          value: `${text.ja.description[activityType]}\n\n${time(new Date(), TimestampStyles.FullDateShortTime)}`,
-        },
-      ],
-    },
-  } satisfies EmbedContents;
+  if (member) {
+    container.addSectionComponents(
+      new SectionBuilder()
+        .addTextDisplayComponents(heading, new TextDisplayBuilder().setContent(userMention(member.id)), body)
+        .setThumbnailAccessory(new ThumbnailBuilder().setURL(member.displayAvatarURL()))
+    );
+  } else {
+    container.addTextDisplayComponents(heading, body);
+  }
+
+  if (passedTime && (activityType === "left" || activityType === "joinedAFK")) {
+    container.addTextDisplayComponents(
+      new TextDisplayBuilder().setContent(`-# ${text.footer.callTime} ${calcTime(passedTime)}`)
+    );
+  }
+
+  return container;
 };

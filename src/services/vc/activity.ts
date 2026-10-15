@@ -1,7 +1,6 @@
 import { addJoinedAt, addTotalTime } from "./time";
-import { vcEmbed } from "../../embed/vc";
+import { vcComponents } from "../../embed/vc";
 import { getGuildData } from "../../repositories/guild";
-import { buildEmbed } from "../../utils";
 import { sendWebhook } from "../webhook";
 
 import type { Client, VoiceState } from "discord.js";
@@ -36,11 +35,7 @@ export const voiceActivity = async (client: Client, oldVoiceState: VoiceState, n
       client,
       newVoiceState.guild,
       webhookUrl,
-      buildEmbed(
-        vcEmbed(newVoiceState.member, newVoiceState.channel, "joined", passedTime),
-        newVoiceState.guild.preferredLocale,
-        guildData.lang
-      ),
+      vcComponents(newVoiceState.member, newVoiceState.channel, "joined", guildData.lang, passedTime),
       guildData.joinMention
     );
 
@@ -57,11 +52,7 @@ export const voiceActivity = async (client: Client, oldVoiceState: VoiceState, n
       client,
       oldVoiceState.guild,
       webhookUrl,
-      buildEmbed(
-        vcEmbed(newVoiceState.member, oldVoiceState.channel, "left", passedTime),
-        newVoiceState.guild.preferredLocale,
-        guildData.lang
-      )
+      vcComponents(newVoiceState.member, oldVoiceState.channel, "left", guildData.lang, passedTime)
     );
 
     if (newVoiceState.member) await addTotalTime(guildData, newVoiceState.member, passedTime);
@@ -81,11 +72,7 @@ export const voiceActivity = async (client: Client, oldVoiceState: VoiceState, n
           client,
           newVoiceState.guild,
           webhookUrl,
-          buildEmbed(
-            vcEmbed(newVoiceState.member, newVoiceState.channel, "startedStreaming", passedTime),
-            newVoiceState.guild.preferredLocale,
-            guildData.lang
-          )
+          vcComponents(newVoiceState.member, newVoiceState.channel, "startedStreaming", guildData.lang, passedTime)
         );
       }
       // 配信終了
@@ -94,11 +81,7 @@ export const voiceActivity = async (client: Client, oldVoiceState: VoiceState, n
           client,
           newVoiceState.guild,
           webhookUrl,
-          buildEmbed(
-            vcEmbed(newVoiceState.member, newVoiceState.channel, "stoppedStreaming", passedTime),
-            newVoiceState.guild.preferredLocale,
-            guildData.lang
-          )
+          vcComponents(newVoiceState.member, newVoiceState.channel, "stoppedStreaming", guildData.lang, passedTime)
         );
       }
     }
@@ -110,11 +93,7 @@ export const voiceActivity = async (client: Client, oldVoiceState: VoiceState, n
           client,
           newVoiceState.guild,
           webhookUrl,
-          buildEmbed(
-            vcEmbed(newVoiceState.member, newVoiceState.channel, "turnedOnVideo", passedTime),
-            newVoiceState.guild.preferredLocale,
-            guildData.lang
-          )
+          vcComponents(newVoiceState.member, newVoiceState.channel, "turnedOnVideo", guildData.lang, passedTime)
         );
       // ビデオ終了
       else if (oldVoiceState.selfVideo && !newVoiceState.selfVideo)
@@ -122,11 +101,7 @@ export const voiceActivity = async (client: Client, oldVoiceState: VoiceState, n
           client,
           newVoiceState.guild,
           webhookUrl,
-          buildEmbed(
-            vcEmbed(newVoiceState.member, newVoiceState.channel, "turnedOffVideo", passedTime),
-            newVoiceState.guild.preferredLocale,
-            guildData.lang
-          )
+          vcComponents(newVoiceState.member, newVoiceState.channel, "turnedOffVideo", guildData.lang, passedTime)
         );
     }
   }
@@ -142,11 +117,7 @@ export const voiceActivity = async (client: Client, oldVoiceState: VoiceState, n
         client,
         newVoiceState.guild,
         webhookUrl,
-        buildEmbed(
-          vcEmbed(newVoiceState.member, newVoiceState.channel, "joinedAFK", passedTime),
-          newVoiceState.guild.preferredLocale,
-          guildData.lang
-        )
+        vcComponents(newVoiceState.member, newVoiceState.channel, "joinedAFK", guildData.lang, passedTime)
       );
 
       if (newVoiceState.member) await addTotalTime(guildData, newVoiceState.member, passedTime);
@@ -157,11 +128,7 @@ export const voiceActivity = async (client: Client, oldVoiceState: VoiceState, n
         client,
         newVoiceState.guild,
         webhookUrl,
-        buildEmbed(
-          vcEmbed(newVoiceState.member, newVoiceState.channel, "joined", passedTime),
-          newVoiceState.guild.preferredLocale,
-          guildData.lang
-        )
+        vcComponents(newVoiceState.member, newVoiceState.channel, "joined", guildData.lang, passedTime)
       );
     }
   }

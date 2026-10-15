@@ -1,8 +1,8 @@
 /* eslint import/order: "off" */
-import { DiscordAPIError, WebhookClient } from "discord.js";
+import { DiscordAPIError, MessageFlags, TextDisplayBuilder, WebhookClient } from "discord.js";
 import { unsetWebhookUrlByGuildId } from "../../repositories/guild";
 
-import type { Client, Guild, EmbedBuilder } from "discord.js";
+import type { Client, ContainerBuilder, Guild } from "discord.js";
 
 /**
  * Webhook URL が利用不能になったことを示すエラーコード
@@ -103,14 +103,14 @@ const enqueueWebhookSend = async <T>(url: string, task: (webhook: WebhookClient)
 };
 
 /**
- * Webhook を用いて Embed を送信します
+ * Webhook を用いて Components V2 の通知を送信します
  */
 export const sendWebhook = async (
   client: Client,
   guild: Guild,
   url: string | undefined,
-  embed: EmbedBuilder,
-  content?: string
+  container: ContainerBuilder,
+  mention?: string
 ) => {
   if (!url) return;
 
@@ -119,8 +119,10 @@ export const sendWebhook = async (
       await webhook.send({
         username: client.user?.username ?? "VC Notice",
         avatarURL: client.user?.avatarURL() ?? undefined,
-        content,
-        embeds: [embed],
+        flags: MessageFlags.IsComponentsV2,
+        withComponents: true,
+        components: mention ? [new TextDisplayBuilder().setContent(mention), container] : [container],
+        allowedMentions: { parse: ["roles", "everyone"] },
       });
     });
   } catch (e) {
