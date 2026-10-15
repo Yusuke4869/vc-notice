@@ -12,7 +12,7 @@ export const helpEmbed = (hasManageGuild: boolean): EmbedContents => {
         },
         {
           name: "`/about`",
-          value: "show about this bot",
+          value: "Show information about this bot",
         },
       ],
     },
@@ -36,7 +36,7 @@ export const helpEmbed = (hasManageGuild: boolean): EmbedContents => {
 
   res.en.fields?.push({
     name: "/set",
-    value: "show about the settings commands",
+    value: "Show help for settings commands",
   });
   res.ja.fields?.push({
     name: "/set",

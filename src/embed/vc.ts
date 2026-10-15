@@ -1,4 +1,4 @@
-import { TimestampStyles, channelMention, time } from "discord.js";
+import { TimestampStyles, channelMention, time, userMention } from "discord.js";
 
 import { calcTime } from "../utils";
 
@@ -8,53 +8,53 @@ import type { EmbedFooterOptions, GuildMember, VoiceBasedChannel } from "discord
 const noticeText = (channel: VoiceBasedChannel): NoticeEmbedText => ({
   en: {
     title: {
-      joined: "Connected Voice Channel",
-      leaved: "Disconnected Voice Channel",
+      joined: "Connected to a Voice Channel",
+      left: "Disconnected from a Voice Channel",
       startedStreaming: "Started Streaming",
-      endedStreaming: "Ended Streaming",
-      startedVideo: "Started Video",
-      endedVideo: "Ended Video",
-      joinedAFK: "Connected AFK Channel",
+      stoppedStreaming: "Stopped Streaming",
+      turnedOnVideo: "Turned On Video",
+      turnedOffVideo: "Turned Off Video",
+      joinedAFK: "Sent to the AFK Channel",
     },
     description: {
       joined: `Joined ${channelMention(channel.id)}`,
-      leaved: `Leaved ${channelMention(channel.id)}`,
-      startedStreaming: "Let's watch the streaming together!",
-      endedStreaming: "Please stream again later!",
-      startedVideo: "Let's watch the video!",
-      endedVideo: "Please video again!",
-      joinedAFK: "Your voice hasn't been heard",
+      left: `Left ${channelMention(channel.id)}`,
+      startedStreaming: "Let's watch the stream together!",
+      stoppedStreaming: "Please stream again later!",
+      turnedOnVideo: "Let's watch the video!",
+      turnedOffVideo: "Please turn on your video again sometime!",
+      joinedAFK: "I can't hear you!",
     },
     footer: {
       callTime: "Call Time:",
     },
     color: {
       joined: "#008000",
-      leaved: "#ff0000",
+      left: "#ff0000",
       startedStreaming: "#008000",
-      endedStreaming: "#ff0000",
-      startedVideo: "#008000",
-      endedVideo: "#ff0000",
+      stoppedStreaming: "#ff0000",
+      turnedOnVideo: "#008000",
+      turnedOffVideo: "#ff0000",
       joinedAFK: "#000000",
     },
   },
   ja: {
     title: {
       joined: "VCに接続しました",
-      leaved: "VCから切断しました",
+      left: "VCから切断しました",
       startedStreaming: "配信を開始しました",
-      endedStreaming: "配信を終了しました",
-      startedVideo: "ビデオを開始しました",
-      endedVideo: "ビデオを終了しました",
+      stoppedStreaming: "配信を終了しました",
+      turnedOnVideo: "ビデオを開始しました",
+      turnedOffVideo: "ビデオを終了しました",
       joinedAFK: "AFKに飛ばされました",
     },
     description: {
       joined: `${channelMention(channel.id)} に参加しました`,
-      leaved: `${channelMention(channel.id)} から退出しました`,
+      left: `${channelMention(channel.id)} から退出しました`,
       startedStreaming: "みんなで見よう！",
-      endedStreaming: "またやってね！",
-      startedVideo: "ビデオを見よう！",
-      endedVideo: "またやってね！",
+      stoppedStreaming: "またやってね！",
+      turnedOnVideo: "ビデオを見よう！",
+      turnedOffVideo: "またやってね！",
       joinedAFK: "あなたの声は聞こえないよ",
     },
     footer: {
@@ -62,11 +62,11 @@ const noticeText = (channel: VoiceBasedChannel): NoticeEmbedText => ({
     },
     color: {
       joined: "#008000",
-      leaved: "#ff0000",
+      left: "#ff0000",
       startedStreaming: "#008000",
-      endedStreaming: "#ff0000",
-      startedVideo: "#008000",
-      endedVideo: "#ff0000",
+      stoppedStreaming: "#ff0000",
+      turnedOnVideo: "#008000",
+      turnedOffVideo: "#ff0000",
       joinedAFK: "#000000",
     },
   },
@@ -78,7 +78,7 @@ const generateFooter = (
   passedTime?: number
 ): Record<TLanguage, EmbedFooterOptions> | null => {
   if (!passedTime) return null;
-  if (activityType !== "leaved" && activityType !== "joinedAFK") return null;
+  if (activityType !== "left" && activityType !== "joinedAFK") return null;
 
   const t = calcTime(passedTime);
   return {
@@ -97,6 +97,7 @@ export const vcEmbed = (
   activityType: voiceChannelActivityType,
   passedTime?: number
 ): EmbedContents => {
+  const memberMention = member ? userMention(member.id) : "member";
   const text = noticeText(channel);
   const footerText = generateFooter(text, activityType, passedTime);
 
@@ -108,7 +109,11 @@ export const vcEmbed = (
       footer: footerText?.en,
       fields: [
         {
-          name: member?.displayName ?? "member",
+          name: "",
+          value: memberMention,
+        },
+        {
+          name: "",
           value: `${text.en.description[activityType]}\n\n${time(new Date(), TimestampStyles.FullDateShortTime)}`,
         },
       ],
@@ -120,10 +125,14 @@ export const vcEmbed = (
       footer: footerText?.ja,
       fields: [
         {
-          name: member?.displayName ?? "member",
+          name: "",
+          value: memberMention,
+        },
+        {
+          name: "",
           value: `${text.ja.description[activityType]}\n\n${time(new Date(), TimestampStyles.FullDateShortTime)}`,
         },
       ],
     },
-  };
+  } satisfies EmbedContents;
 };

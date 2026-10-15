@@ -58,7 +58,7 @@ export const voiceActivity = async (client: Client, oldVoiceState: VoiceState, n
       oldVoiceState.guild,
       webhookUrl,
       buildEmbed(
-        vcEmbed(newVoiceState.member, oldVoiceState.channel, "leaved", passedTime),
+        vcEmbed(newVoiceState.member, oldVoiceState.channel, "left", passedTime),
         newVoiceState.guild.preferredLocale,
         guildData.lang
       )
@@ -95,7 +95,7 @@ export const voiceActivity = async (client: Client, oldVoiceState: VoiceState, n
           newVoiceState.guild,
           webhookUrl,
           buildEmbed(
-            vcEmbed(newVoiceState.member, newVoiceState.channel, "endedStreaming", passedTime),
+            vcEmbed(newVoiceState.member, newVoiceState.channel, "stoppedStreaming", passedTime),
             newVoiceState.guild.preferredLocale,
             guildData.lang
           )
@@ -111,7 +111,7 @@ export const voiceActivity = async (client: Client, oldVoiceState: VoiceState, n
           newVoiceState.guild,
           webhookUrl,
           buildEmbed(
-            vcEmbed(newVoiceState.member, newVoiceState.channel, "startedVideo", passedTime),
+            vcEmbed(newVoiceState.member, newVoiceState.channel, "turnedOnVideo", passedTime),
             newVoiceState.guild.preferredLocale,
             guildData.lang
           )
@@ -123,7 +123,7 @@ export const voiceActivity = async (client: Client, oldVoiceState: VoiceState, n
           newVoiceState.guild,
           webhookUrl,
           buildEmbed(
-            vcEmbed(newVoiceState.member, newVoiceState.channel, "endedVideo", passedTime),
+            vcEmbed(newVoiceState.member, newVoiceState.channel, "turnedOffVideo", passedTime),
             newVoiceState.guild.preferredLocale,
             guildData.lang
           )
