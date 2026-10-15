@@ -14,7 +14,7 @@ export const slashCommands: SlashCommandConfig[] = [
   {
     name: "about",
     description: {
-      en: "Show about me",
+      en: "Show information about this bot",
       ja: "このBotについて",
     },
     allowDM: true,
@@ -39,7 +39,7 @@ export const slashCommands: SlashCommandConfig[] = [
       {
         name: "help",
         description: {
-          en: "Show help of settings",
+          en: "Show help for settings commands",
           ja: "設定のHelpを表示します",
         },
       },

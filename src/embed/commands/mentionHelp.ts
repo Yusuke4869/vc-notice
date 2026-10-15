@@ -11,11 +11,11 @@ export const mentionHelpEmbed = (): EmbedContents => ({
       },
       {
         name: "/about",
-        value: "show about this bot",
+        value: "Show information about this bot",
       },
       {
         name: "/set",
-        value: "show about the settings commands",
+        value: "Show help for settings commands",
       },
     ],
     footer: {

@@ -7,7 +7,7 @@ export const setHelpEmbed = (): EmbedContents => ({
     fields: [
       {
         name: "`/set channel`",
-        value: "Set the channel to send notifications\nPlease enter the channel you want to notify",
+        value: "Set the notification channel\nRun this command in the channel where you want to receive notifications.",
       },
       {
         name: "`/set language [language]`",

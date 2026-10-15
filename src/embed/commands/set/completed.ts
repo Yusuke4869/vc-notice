@@ -10,12 +10,12 @@ export const setCompletedEmbed = (
   language: TLanguage
 ): EmbedContents => ({
   en: {
-    title: notificationChannel ? "Set up completed!" : "Set up not completed yet",
+    title: notificationChannel ? "Setup complete!" : "Setup not complete yet",
     color: notificationChannel ? defaultColor : "#ff0000",
     fields: [
       {
         name: "Notification channel",
-        value: notificationChannel ? channelMention(notificationChannel.id) : "Failed to set up, please try again",
+        value: notificationChannel ? channelMention(notificationChannel.id) : "Setup failed. Please try again.",
         inline: true,
       },
       {

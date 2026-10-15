@@ -2,7 +2,7 @@ import type { EmbedContents } from "../../../types";
 
 export const setMentionEmbed = (mention: "@everyone" | `<@&${string}>` | undefined): EmbedContents => ({
   en: {
-    title: "Set the mention for joining notification",
+    title: "Join notification mention updated",
     fields: [
       {
         name: "Mention",
@@ -10,7 +10,7 @@ export const setMentionEmbed = (mention: "@everyone" | `<@&${string}>` | undefin
       },
     ],
     footer: {
-      text: "No mention of moving between voice channels",
+      text: "No mentions are sent when moving between voice channels",
     },
   },
   ja: {

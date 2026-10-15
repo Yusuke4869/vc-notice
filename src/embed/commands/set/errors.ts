@@ -36,7 +36,7 @@ export const noManageWebhooksPermissionErrorEmbed = (): EmbedContents => ({
     fields: [
       {
         name: "Permission required",
-        value: 'You need the "Manage Webhooks" permission in VC Notice',
+        value: 'VC Notice needs the "Manage Webhooks" permission in this channel',
       },
     ],
     footer: {

@@ -1,2 +1,2 @@
 export type voiceChannelActivityType =
-  "joined" | "leaved" | "startedStreaming" | "endedStreaming" | "startedVideo" | "endedVideo" | "joinedAFK";
+  "joined" | "left" | "startedStreaming" | "stoppedStreaming" | "turnedOnVideo" | "turnedOffVideo" | "joinedAFK";
