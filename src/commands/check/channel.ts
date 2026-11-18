@@ -3,7 +3,7 @@ import { roleMention, PermissionFlagsBits } from "discord.js";
 import { setNotFoundInteractionChannelErrorEmbed, checkChannelPermissionsEmbed } from "../../embed";
 import { buildEmbed } from "../../utils";
 
-import type { Client, ChatInputCommandInteraction, VoiceBasedChannel } from "discord.js";
+import type { Client, ChatInputCommandInteraction, VoiceChannel } from "discord.js";
 
 export const checkChannel = async (client: Client, interaction: ChatInputCommandInteraction) => {
   const guild = interaction.guild;
@@ -18,20 +18,23 @@ export const checkChannel = async (client: Client, interaction: ChatInputCommand
   }
 
   try {
-    const channel = interaction.options.data[0].options?.at(0)?.channel as VoiceBasedChannel;
+    const channel = interaction.options.data[0].options?.at(0)?.channel as VoiceChannel;
     await interaction.reply({
       embeds: [
         buildEmbed(
           checkChannelPermissionsEmbed(
             channel,
-            channel.permissionsFor(botUser)?.has(PermissionFlagsBits.Connect) ?? true,
+            channel.permissionsFor(botUser)?.has([PermissionFlagsBits.ViewChannel, PermissionFlagsBits.Connect]) ??
+              false,
             guild.members.me?.roles
               .valueOf()
               .sort((a, b) => b.position - a.position)
               .map((role) => ({
                 role: role.name === "@everyone" ? "@everyone" : roleMention(role.id),
                 isAdmin: role.permissions.has(PermissionFlagsBits.Administrator),
-                allowed: channel.permissionsFor(role).has(PermissionFlagsBits.Connect),
+                allowed: channel
+                  .permissionsFor(role)
+                  .has([PermissionFlagsBits.ViewChannel, PermissionFlagsBits.Connect]),
               })) ?? []
           ),
           interaction.locale
