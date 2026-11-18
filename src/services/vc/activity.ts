@@ -3,7 +3,7 @@ import { vcComponents } from "../../embed/vc";
 import { getGuildData } from "../../repositories/guild";
 import { sendWebhook } from "../webhook";
 
-import type { Client, VoiceState } from "discord.js";
+import type { Client, VoiceBasedChannel, VoiceState } from "discord.js";
 
 export const voiceActivity = async (client: Client, oldVoiceState: VoiceState, newVoiceState: VoiceState) => {
   const guildData = await getGuildData(newVoiceState.guild.id);
@@ -25,42 +25,50 @@ export const voiceActivity = async (client: Client, oldVoiceState: VoiceState, n
   const joinedAt = memberData?.joinedAt;
   const passedTime = joinedAt ? unixtime - joinedAt : 0;
 
+  const botUser = client.user;
+
+  // 通知は Bot がチャンネルを閲覧・接続できる場合のみ送る
+  // 滞在時間の記録は権限に依存させない
+  const canNotify = (channel: VoiceBasedChannel | null) =>
+    channel?.permissionsFor(botUser)?.has(["ViewChannel", "Connect"]) ?? false;
+
   // 参加
-  if (
-    !oldVoiceState.channel &&
-    newVoiceState.channel?.permissionsFor(client.user)?.has(["ViewChannel", "Connect"]) &&
-    guildData.noticeMode !== "stream-video"
-  ) {
-    await sendWebhook(
-      client,
-      newVoiceState.guild,
-      webhookUrl,
-      vcComponents(newVoiceState.member, newVoiceState.channel, "joined", guildData.lang, passedTime),
-      guildData.joinMention
-    );
+  if (!oldVoiceState.channel && newVoiceState.channel && guildData.noticeMode !== "stream-video") {
+    if (canNotify(newVoiceState.channel)) {
+      await sendWebhook(
+        client,
+        newVoiceState.guild,
+        webhookUrl,
+        vcComponents(newVoiceState.member, newVoiceState.channel, "joined", guildData.lang, passedTime),
+        guildData.joinMention
+      );
+    }
 
     if (newVoiceState.member) await addJoinedAt(guildData, newVoiceState.member, unixtime);
   }
   // 退出
   else if (
-    oldVoiceState.channel?.permissionsFor(client.user)?.has(["ViewChannel", "Connect"]) &&
+    oldVoiceState.channel &&
     !newVoiceState.channel &&
     guildData.noticeMode !== "join-only" &&
     guildData.noticeMode !== "stream-video"
   ) {
-    await sendWebhook(
-      client,
-      oldVoiceState.guild,
-      webhookUrl,
-      vcComponents(newVoiceState.member, oldVoiceState.channel, "left", guildData.lang, passedTime)
-    );
+    if (canNotify(oldVoiceState.channel)) {
+      await sendWebhook(
+        client,
+        oldVoiceState.guild,
+        webhookUrl,
+        vcComponents(newVoiceState.member, oldVoiceState.channel, "left", guildData.lang, passedTime)
+      );
+    }
 
     if (newVoiceState.member) await addTotalTime(guildData, newVoiceState.member, passedTime);
   }
   // 前後のチャンネルが同じ
   else if (
     oldVoiceState.channelId === newVoiceState.channelId &&
-    newVoiceState.channel?.permissionsFor(client.user)?.has(["ViewChannel", "Connect"]) &&
+    newVoiceState.channel &&
+    canNotify(newVoiceState.channel) &&
     guildData.noticeMode !== "join-only" &&
     guildData.noticeMode !== "join-leave"
   ) {
@@ -108,22 +116,24 @@ export const voiceActivity = async (client: Client, oldVoiceState: VoiceState, n
   // 前後のチャンネルが異なるとき
   else if (
     oldVoiceState.channelId !== newVoiceState.channelId &&
-    newVoiceState.channel?.permissionsFor(client.user)?.has(["ViewChannel", "Connect"]) &&
+    newVoiceState.channel &&
     guildData.noticeMode !== "stream-video"
   ) {
     // AFKチャンネル参加
     if (newVoiceState.channelId === newVoiceState.guild.afkChannelId) {
-      await sendWebhook(
-        client,
-        newVoiceState.guild,
-        webhookUrl,
-        vcComponents(newVoiceState.member, newVoiceState.channel, "joinedAFK", guildData.lang, passedTime)
-      );
+      if (canNotify(newVoiceState.channel)) {
+        await sendWebhook(
+          client,
+          newVoiceState.guild,
+          webhookUrl,
+          vcComponents(newVoiceState.member, newVoiceState.channel, "joinedAFK", guildData.lang, passedTime)
+        );
+      }
 
       if (newVoiceState.member) await addTotalTime(guildData, newVoiceState.member, passedTime);
     }
     // チャンネル移動
-    else {
+    else if (canNotify(newVoiceState.channel)) {
       await sendWebhook(
         client,
         newVoiceState.guild,
